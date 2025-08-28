@@ -25,5 +25,6 @@ jobs:
           local-dir: ./
           server-dir: /ithelp.uno/www/
           exclude: |
-            **/.git**
+            **/.git*
+            **/.git/**
             **/.github/**
