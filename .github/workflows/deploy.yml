@@ -23,7 +23,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./
-          server-dir: /home/eg550228/ithelp.uno/www/
+          server-dir: /ithelp.uno/www/
           exclude: |
-            **/.git*
+            **/.git**
             **/.github/**
