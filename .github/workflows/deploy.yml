@@ -24,6 +24,9 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./
           server-dir: /ithelp.uno/www/
+          state-name: .ftp-deploy-sync-state.json
+          concurrency: 1
+          timeout: 60
           exclude: |
             **/.git*
             **/.git/**
