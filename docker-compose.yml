@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: docker/nginx.dockerfile
+    ports:
+      - 8097:80
+    links:
+      - fpm
+    volumes:
+      - ./:/var/www/web
+  # сам проект
+  fpm:
+    tty: true
+    build:
+      context: .
+      dockerfile: ${FPM_CONFIG_FILE:-docker/fpm.dockerfile}
+    volumes:
+      - ./:/var/www/web
+
+#    command: composer install & tail -f /dev/null
