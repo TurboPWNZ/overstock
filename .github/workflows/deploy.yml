@@ -1,0 +1,29 @@
+name: Incremental FTP Deploy
+
+on:
+  push:
+    branches:
+      - main
+  create:
+    tags:
+      - '*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Шаг 1: Клонируем репозиторий
+      - uses: actions/checkout@v4
+
+      # Шаг 2: FTP-деплой только изменённых файлов
+      - name: FTP Deploy (only changes)
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: .
+          server-dir: /home/eg550228/ithelp.uno/www/
+          exclude: |
+            **/.git*
+            **/.github/**
