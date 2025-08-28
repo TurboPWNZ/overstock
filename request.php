@@ -2,6 +2,11 @@
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/script/core/Telegram.php';
 
+//var_dump($_REQUEST);
+//var_dump($_FILES);
+//
+//exit;
+
 $data['name'] = '🗣 <i>'. strip_tags($_REQUEST["name"]) . '</i>' . "\n\n";
 
 if (!empty($_REQUEST["company"])) {
@@ -9,6 +14,7 @@ if (!empty($_REQUEST["company"])) {
 }
 
 $data['phone'] =  "📞" . strip_tags($_REQUEST["phone"]) . "\n\n";
-$data['problem'] =  strip_tags($_REQUEST["problem"]) . "\n\n";
+$data['description'] =  strip_tags($_REQUEST["description"]) . "\n\n";
 
-Telegram::sendRequest(implode($data));
+//Telegram::sendRequest(implode($data));
+Telegram::sendMediaRequest(implode($data), $_FILES);

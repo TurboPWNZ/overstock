@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ІТ Консалтинг та Технічна Підтримка — ITHelp</title>
+    <meta name="description" content="Професійні ІТ-рішення для бізнесу та приватних клієнтів: налаштування мереж, відновлення даних, інформаційна безпека. Понад 15 років досвіду.">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="ИТ Консалтинг и Техническая Поддержка — ITHelp.uno">
+    <meta property="og:description" content="Комплексні ІТ-рішення для бізнесу та приватних клієнтів.">
+    <meta property="og:url" content="https://ithelp.uno">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://ithelp.uno/favicon-256x256.png">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .bg-gradient-custom {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .hover-scale {
+            transition: transform 0.2s ease-in-out;
+        }
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+        .form-input {
+            transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .form-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+    </style>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "ITHelp.uno",
+            "url": "http://ithelp.uno",
+            "logo": "http://ithelp.uno/favicon-256x256.png",
+            "description": "Професійні послуги ІТ: техпідтримка, налаштування мереж, відновлення даних.",
+            "contactPoint": {
+                "@type": "ContactPoint",
+                "contactType": "Customer Support",
+                "url": "https://t.me/ithelpmain",
+                "availableLanguage": "Ukrainian"
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+<!-- Header -->
+<header class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <div class="flex items-center">
+                <i class="fas fa-laptop-code text-2xl text-blue-600 mr-3"></i>
+                <span class="text-xl font-bold text-gray-900">ІТ Консалтинг</span>
+            </div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#services" class="text-gray-600 hover:text-blue-600 transition duration-300">Послуги</a>
+                <a href="#about" class="text-gray-600 hover:text-blue-600 transition duration-300">Про нас</a>
+                <a href="#contact" class="text-gray-600 hover:text-blue-600 transition duration-300">Контакти</a>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<!-- Hero Section -->
+<section class="bg-gradient-custom text-white py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                Вирішуємо будь-які <br>
+                <span class="text-yellow-300">ІТ проблеми</span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 text-gray-100">
+                Понад 15 років досвіду у сфері інформаційних технологій
+            </p>
+            <p class="text-lg mb-10 text-gray-200 max-w-2xl mx-auto">
+                Професійні ІТ рішення для приватних осіб та бізнесу.
+                Від діагностики до повного відновлення систем.
+            </p>
+            <a href="#contact" class="inline-block bg-yellow-400 text-gray-900 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-yellow-300 transition duration-300 hover-scale">
+                Отримати консультацію
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Чому обирають нас?</h2>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                Ми надаємо комплексні ІТ рішення з гарантією якості та професійним підходом
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="text-center p-6">
+                <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-clock text-2xl text-blue-600"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">15+ років досвіду</h3>
+                <p class="text-gray-600">Накопичена експертиза у вирішенні найскладніших ІТ завдань</p>
+            </div>
+
+            <div class="text-center p-6">
+                <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-users text-2xl text-green-600"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Універсальність</h3>
+                <p class="text-gray-600">Працюємо як з приватними особами, так і з корпоративними клієнтами</p>
+            </div>
+
+            <div class="text-center p-6">
+                <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-shield-alt text-2xl text-purple-600"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Гарантія якості</h3>
+                <p class="text-gray-600">Надаємо гарантію на всі виконані роботи</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section id="services" class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Наші послуги</h2>
+            <p class="text-lg text-gray-600">Комплексні ІТ рішення для будь-яких завдань</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="bg-white p-6 rounded-lg shadow-lg hover-scale">
+                <i class="fas fa-desktop text-3xl text-blue-600 mb-4"></i>
+                <h3 class="text-xl font-semibold text-gray-900 mb-3">Технічна підтримка</h3>
+                <p class="text-gray-600">Діагностика та усунення несправностей комп'ютерів та серверів</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-lg hover-scale">
+                <i class="fas fa-network-wired text-3xl text-green-600 mb-4"></i>
+                <h3 class="text-xl font-semibold text-gray-900 mb-3">Налаштування мереж</h3>
+                <p class="text-gray-600">Проектування та налаштування локальних і корпоративних мереж</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-lg hover-scale">
+                <i class="fas fa-database text-3xl text-purple-600 mb-4"></i>
+                <h3 class="text-xl font-semibold text-gray-900 mb-3">Відновлення даних</h3>
+                <p class="text-gray-600">Професійне відновлення втраченої інформації</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-lg hover-scale">
+                <i class="fas fa-shield-alt text-3xl text-red-600 mb-4"></i>
+                <h3 class="text-xl font-semibold text-gray-900 mb-3">Інформаційна безпека</h3>
+                <p class="text-gray-600">Захист від вірусів, налаштування антивірусних систем</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-lg hover-scale">
+                <i class="fas fa-cloud text-3xl text-indigo-600 mb-4"></i>
+                <h3 class="text-xl font-semibold text-gray-900 mb-3">Хмарні рішення</h3>
+                <p class="text-gray-600">Міграція в хмару, налаштування хмарних сервісів</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-lg hover-scale">
+                <i class="fas fa-cogs text-3xl text-yellow-600 mb-4"></i>
+                <h3 class="text-xl font-semibold text-gray-900 mb-3">Автоматизація процесів</h3>
+                <p class="text-gray-600">Оптимізація бізнес-процесів через ІТ рішення</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Form Section -->
+<section id="contact" class="py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Опишіть вашу проблему</h2>
+            <p class="text-lg text-gray-600">
+                Отримайте безкоштовну консультацію та оцінку вартості рішення
+            </p>
+        </div>
+
+        <div class="bg-gray-50 p-8 rounded-lg shadow-lg">
+            <form id="contactForm" class="space-y-6">
+                <div>
+                    <label for="problem" class="block text-sm font-medium text-gray-700 mb-2">
+                        Опишіть вашу ІТ проблему *
+                    </label>
+                    <textarea
+                            id="problem"
+                            name="problem"
+                            rows="5"
+                            required
+                            class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none resize-none"
+                            placeholder="Детально опишіть проблему, з якою ви зіткнулися..."
+                    ></textarea>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
+                            Ваше ім'я *
+                        </label>
+                        <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                required
+                                class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none"
+                                placeholder="Введіть ваше ім'я"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">
+                            Контактний телефон *
+                        </label>
+                        <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                required
+                                class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none"
+                                placeholder="+380 (99) 123-45-67"
+                        >
+                    </div>
+                </div>
+
+                <div>
+                    <label for="company" class="block text-sm font-medium text-gray-700 mb-2">
+                        Компанія (необов'язково)
+                    </label>
+                    <input
+                            type="text"
+                            id="company"
+                            name="company"
+                            class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none"
+                            placeholder="Назва компанії"
+                    >
+                </div>
+
+                <div class="flex items-start">
+                    <input
+                            type="checkbox"
+                            id="consent"
+                            name="consent"
+                            required
+                            class="mt-1 mr-3"
+                    >
+                    <label for="consent" class="text-sm text-gray-600">
+                        Я згоден на обробку персональних даних та отримання інформаційних повідомлень *
+                    </label>
+                </div>
+
+                <div class="text-center">
+                    <button
+                            type="submit"
+                            class="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition duration-300 hover-scale"
+                    >
+                        <i class="fas fa-paper-plane mr-2"></i>
+                        Надіслати заявку
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-3 gap-8">
+            <div>
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-laptop-code text-2xl text-blue-400 mr-3"></i>
+                    <span class="text-xl font-bold">ІТ Консалтинг</span>
+                </div>
+                <p class="text-gray-400">
+                    Професійні ІТ рішення з досвідом понад 15 років.
+                    Вирішуємо завдання будь-якої складності.
+                </p>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Контакти</h3>
+                <div class="space-y-2">
+                    <p class="text-gray-400">
+                        <i class="fas fa-paper-plane mr-2"></i>
+                        @ithelpmain
+                    </p>
+                    <p class="text-gray-400">
+                        <i class="fas fa-envelope mr-2"></i>
+                        ithelp.req@gmail.com
+                    </p>
+                    <p class="text-gray-400">
+                        <i class="fas fa-clock mr-2"></i>
+                        Щодня 9:00 - 21:00
+                    </p>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Швидкі посилання</h3>
+                <div class="space-y-2">
+                    <a href="#services" class="block text-gray-400 hover:text-white transition duration-300">Послуги</a>
+                    <a href="#about" class="block text-gray-400 hover:text-white transition duration-300">Про компанію</a>
+                    <a href="#contact" class="block text-gray-400 hover:text-white transition duration-300">Контакти</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+            <p class="text-gray-400">
+                © 2024-2025 ІТ Консалтинг. Усі права захищені.
+            </p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Phone number formatting for Ukrainian numbers
+    document.getElementById('phone').addEventListener('input', function (e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length > 0) {
+            if (value.startsWith('8')) value = '380' + value.slice(1);
+            if (value.startsWith('0')) value = '38' + value;
+            if (!value.startsWith('380')) value = '380' + value;
+        }
+
+        let formatted = '';
+        if (value.length > 0) formatted += '+380';
+        if (value.length > 3) formatted += ' (' + value.slice(3, 5);
+        if (value.length > 5) formatted += ') ' + value.slice(5, 8);
+        if (value.length > 8) formatted += '-' + value.slice(8, 10);
+        if (value.length > 10) formatted += '-' + value.slice(10, 12);
+
+        e.target.value = formatted;
+    });
+
+    // Form submission
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData);
+
+        let response = fetch('/request.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        // Show success message
+        alert('Дякуємо за заявку! Ми зв\'яжемося з вами найближчим часом.');
+
+        // Reset form
+        this.reset();
+
+        // In real application, you would send data to your server here
+        console.log('Form data:', data);
+    });
+
+    // Add loading animation on form submit
+    document.getElementById('contactForm').addEventListener('submit', function() {
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Надсилаємо...';
+        submitBtn.disabled = true;
+
+        setTimeout(() => {
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }, 2000);
+    });
+</script>
+</body>
+</html>
