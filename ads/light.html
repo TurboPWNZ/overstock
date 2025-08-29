@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>СКУПКА НЕСПРАВНОЇ ТЕХНІКИ</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+    .main-title {
+      font-size: 48px;
+      line-height: 1.1;
+    }
+    .phone-box {
+      border: 3px dashed #000;
+      min-height: 80px;
+    }
+    .qr-box {
+      border: 3px dashed #000;
+      width: 150px;
+      height: 150px;
+    }
+    @media print {
+      body { margin: 0; }
+      .no-print { display: none; }
+    }
+  </style>
+</head>
+<body class="bg-white p-6">
+<div class="max-w-2xl mx-auto text-center">
+  <!-- Заголовок -->
+  <div class="bg-red-600 text-white p-6 mb-8 rounded-lg">
+    <h1 class="main-title font-black uppercase">СКУПКА</h1>
+    <h2 class="text-3xl font-bold uppercase">НЕСПРАВНОЇ ТЕХНІКИ</h2>
+  </div>
+
+  <!-- Что покупаем -->
+  <div class="mb-8">
+    <h3 class="text-2xl font-bold mb-4 uppercase">КУПУЄМО:</h3>
+    <div class="text-xl font-bold space-y-2">
+      <div>📱 ТЕЛЕФОНИ</div>
+      <div>💻 НОУТБУКИ</div>
+      <div>🖥️ КОМП'ЮТЕРИ</div>
+      <div>📺 ТЕЛЕВІЗОРИ</div>
+      <div>⌚ ГОДИННИКИ</div>
+      <div>🎮 ПРИСТАВКИ</div>
+    </div>
+  </div>
+
+  <!-- Условия -->
+  <div class="bg-yellow-300 p-4 mb-8 rounded-lg">
+    <p class="text-xl font-bold uppercase">НАВІТЬ РОЗБИТУ І НЕРОБОЧУ!</p>
+    <p class="text-lg font-bold">ДОРОГО! ГОТІВКОЮ!</p>
+  </div>
+
+  <!-- Телефон -->
+  <div class="mb-6">
+    <p class="text-lg font-bold mb-2">ТЕЛЕФОН:</p>
+    <div class="phone-box flex items-center justify-center bg-gray-100 rounded-lg">
+      <p class="text-2xl font-bold text-gray-500">[ ВАШ НОМЕР ТЕЛЕФОНУ ]</p>
+    </div>
+  </div>
+
+  <!-- QR код -->
+  <div class="flex justify-center">
+    <div class="text-center">
+      <p class="text-lg font-bold mb-2">QR КОД:</p>
+      <div class="qr-box flex items-center justify-center bg-gray-100 rounded-lg mx-auto">
+        <p class="text-sm font-bold text-gray-500 text-center px-4">QR<br>КОД</p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

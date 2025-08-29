@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Скупка комп'ютерів та гаджетів</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.4;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .shadow-custom {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .qr-placeholder {
+            border: 3px dashed #cbd5e0;
+            background-color: #f7fafc;
+        }
+
+        .phone-box {
+            border: 2px solid #4299e1;
+            background-color: #ebf8ff;
+        }
+
+        @media print {
+            body {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 p-4">
+<div class="max-w-2xl mx-auto bg-white shadow-custom rounded-2xl overflow-hidden">
+    <!-- Header -->
+    <div class="gradient-bg text-white p-8 text-center">
+        <h1 class="text-4xl font-bold mb-2">💻 СКУПКА ТЕХНІКИ 📱</h1>
+        <p class="text-xl font-semibold">Купуємо комп'ютери, ноутбуки та гаджети</p>
+        <div class="mt-4 flex justify-center items-center space-x-4">
+            <div class="flex items-center">
+                <i class="fas fa-money-bill-wave text-2xl mr-2"></i>
+                <span class="text-lg font-semibold">ВИГІДНІ ЦІНИ</span>
+            </div>
+            <div class="flex items-center">
+                <i class="fas fa-clock text-2xl mr-2"></i>
+                <span class="text-lg font-semibold">ШВИДКО</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="p-8">
+        <!-- What we buy -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+                <i class="fas fa-shopping-cart text-blue-600 mr-2"></i>
+                ЩО МИ КУПУЄМО
+            </h2>
+
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+                    <div class="flex items-center">
+                        <i class="fas fa-laptop text-blue-600 text-xl mr-3"></i>
+                        <span class="font-semibold text-gray-800">Ноутбуки</span>
+                    </div>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
+                    <div class="flex items-center">
+                        <i class="fas fa-desktop text-green-600 text-xl mr-3"></i>
+                        <span class="font-semibold text-gray-800">Комп'ютери</span>
+                    </div>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg border-l-4 border-purple-500">
+                    <div class="flex items-center">
+                        <i class="fas fa-mobile-alt text-purple-600 text-xl mr-3"></i>
+                        <span class="font-semibold text-gray-800">Смартфони</span>
+                    </div>
+                </div>
+                <div class="bg-red-50 p-4 rounded-lg border-l-4 border-red-500">
+                    <div class="flex items-center">
+                        <i class="fas fa-tablet-alt text-red-600 text-xl mr-3"></i>
+                        <span class="font-semibold text-gray-800">Планшети</span>
+                    </div>
+                </div>
+                <div class="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-500">
+                    <div class="flex items-center">
+                        <i class="fas fa-gamepad text-yellow-600 text-xl mr-3"></i>
+                        <span class="font-semibold text-gray-800">Консолі</span>
+                    </div>
+                </div>
+                <div class="bg-indigo-50 p-4 rounded-lg border-l-4 border-indigo-500">
+                    <div class="flex items-center">
+                        <i class="fas fa-headphones text-indigo-600 text-xl mr-3"></i>
+                        <span class="font-semibold text-gray-800">Аксесуари</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-100 p-4 rounded-lg">
+                <p class="text-center text-gray-700 font-medium">
+                    <i class="fas fa-tools text-gray-600 mr-2"></i>
+                    Купуємо як робочу, так і несправну техніку!
+                </p>
+            </div>
+        </div>
+
+        <!-- Advantages -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+                <i class="fas fa-star text-yellow-500 mr-2"></i>
+                НАШІ ПЕРЕВАГИ
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="text-center bg-green-50 p-4 rounded-lg">
+                    <i class="fas fa-money-check-alt text-3xl text-green-600 mb-3"></i>
+                    <h3 class="font-bold text-gray-800 mb-2">ГОТІВКА ВІДРАЗУ</h3>
+                    <p class="text-sm text-gray-600">Оплата на місці після оцінки</p>
+                </div>
+                <div class="text-center bg-blue-50 p-4 rounded-lg">
+                    <i class="fas fa-search-dollar text-3xl text-blue-600 mb-3"></i>
+                    <h3 class="font-bold text-gray-800 mb-2">ЧЕСНА ОЦІНКА</h3>
+                    <p class="text-sm text-gray-600">Справедлива ціна за вашу техніку</p>
+                </div>
+                <div class="text-center bg-purple-50 p-4 rounded-lg">
+                    <i class="fas fa-handshake text-3xl text-purple-600 mb-3"></i>
+                    <h3 class="font-bold text-gray-800 mb-2">ДОВІРА</h3>
+                    <p class="text-sm text-gray-600">Багато років на ринку</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="border-t-2 border-gray-200 pt-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <!-- Phone Number -->
+                <div class="text-center">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">
+                        <i class="fas fa-phone text-blue-600 mr-2"></i>
+                        ЗВ'ЯЖІТЬСЯ З НАМИ
+                    </h3>
+                    <div class="phone-box rounded-xl p-6">
+                        <p class="text-sm text-gray-600 mb-2">Ваш номер телефону:</p>
+                        <div class="bg-white border-2 border-dashed border-blue-400 rounded-lg p-4 min-h-16 flex items-center justify-center">
+                            <span class="text-2xl font-bold text-blue-600">+ 38 (0__) ___-__-__</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QR Code -->
+                <div class="text-center">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">
+                        <i class="fas fa-qrcode text-green-600 mr-2"></i>
+                        QR КОД
+                    </h3>
+                    <div class="qr-placeholder rounded-xl p-6 mx-auto w-40 h-40 flex items-center justify-center">
+                        <div class="text-center">
+                            <i class="fas fa-qrcode text-4xl text-gray-400 mb-2"></i>
+                            <p class="text-xs text-gray-500">Місце для<br>QR коду</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="mt-8 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl p-6 text-center">
+                <h2 class="text-2xl font-bold mb-2">
+                    <i class="fas fa-phone-volume mr-2"></i>
+                    ТЕЛЕФОНУЙТЕ ПРЯМО ЗАРАЗ!
+                </h2>
+                <p class="text-lg">Безкоштовна консультація та оцінка вашої техніки</p>
+                <div class="mt-4 flex justify-center items-center space-x-6">
+                    <div class="flex items-center">
+                        <i class="fas fa-clock mr-2"></i>
+                        <span>Працюємо щодня</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-map-marker-alt mr-2"></i>
+                        <span>Виїзд по місту</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
