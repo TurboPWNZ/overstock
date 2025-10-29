@@ -1,6 +1,7 @@
 <?php
 namespace Slando\core;
 
+use Slando\core\db\Ads;
 use Slando\core\db\User;
 use Slando\core\db\UserRequest;
 
@@ -11,8 +12,10 @@ class Api
     const ADD_ADS_STEP = 1;
 
     const ADS_NAME_STEP = 2;
+    const ADD_PHONE_STEP = 3;
 
     private static $_user;
+    private static $_request;
     private static $step;
     private static $_chatId;
 
@@ -49,10 +52,10 @@ class Api
 
         self::$_user = $user;
 
-        $request = (new UserRequest())->find('userId = :userId', ['userId' => self::$_user['id']]);
+        self::$_request = (new UserRequest())->find('userId = :userId', ['userId' => self::$_user['id']]);
 
-        if (!empty($request['step'])) {
-            return $request['step'];
+        if (!empty($_request['step'])) {
+            return $_request['step'];
         }
 
         return self::WELCOME_STEP;
@@ -161,11 +164,44 @@ class Api
 
         self::$_responseMessage = "Добре " . $name . " вкажіть контактний номер для зв'язку 📲";
 
+        self::updateAds(['name' => $name]);
+
+        self::setNextStep(self::ADD_PHONE_STEP);
+
         return [
             'chatId' => self::$_chatId,
-            'responseMessage' => self::$_responseMessage
+            'responseMessage' => self::$_responseMessage,
+            'keyboard' => []
         ];
     }
+
+    private static function updateAds($params)
+    {
+        $ads = self::getCurrentAds();
+
+        (new Ads())->update('id = :id', array_merge([
+            'id' => $ads['id']
+        ], $params));
+    }
+
+    private static function getCurrentAds()
+    {
+        if (empty(self::$_request['adsId'])) {
+            $ads = (new Ads())->insert([
+                'userId' => self::$_user['id']
+            ]);
+
+            (new UserRequest())->update('id = :id', [
+                'id' => self::$_request['id'],
+                'adsId' => $ads['id']
+            ]);
+
+            return $ads;
+        }
+
+        return (new Ads())->findByPk(self::$_request['adsId']);
+    }
+
     private static function isCanPostAds()
     {
         $lastPublishTime = strtotime(self::$_user['lastPost']);
