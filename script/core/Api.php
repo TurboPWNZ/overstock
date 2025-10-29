@@ -6,7 +6,11 @@ use Slando\core\db\UserRequest;
 
 class Api
 {
-    private static $_userID;
+    const WELCOME_STEP = 0;
+
+    const ADD_ADS_STEP = 1;
+
+    private static $_user;
     private static $step;
     private static $_chatId;
 
@@ -32,7 +36,7 @@ class Api
         } elseif (!empty($update['callback_query']['from']['id'])) {
             $telegramUserID = $update['callback_query']['from']['id'];
         } else {
-            return 0;
+            return self::WELCOME_STEP;
         }
 
         $user = (new User())->find('telegramUserId = :telegramUserId', ['telegramUserId' => $telegramUserID]);
@@ -41,15 +45,15 @@ class Api
             $user = (new User())->insert(['telegramUserId' => $telegramUserID]);
         }
 
-        self::$_userID = $user['id'];
+        self::$_user = $user;
 
-        $request = (new UserRequest())->find('userId = :userId', ['userId' => self::$_userID]);
+        $request = (new UserRequest())->find('userId = :userId', ['userId' => self::$_user['id']]);
 
         if (!empty($request['step'])) {
             return $request['step'];
         }
 
-        return 0;
+        return self::WELCOME_STEP;
     }
 
     private static function runStep($step, $data)
@@ -76,7 +80,7 @@ class Api
                 ]
             ];
 
-            self::setNextStep(1);
+            self::setNextStep(self::ADD_ADS_STEP);
 
             return [
                 'chatId' => self::$_chatId,
@@ -100,36 +104,45 @@ class Api
             ];
         }
 
-        return self::runStep(self::$step - 1, $update);
+        return self::runStep(self::WELCOME_STEP, $update);
     }
 
     private static function processAction($action)
     {
-        if ($action == "/start") {
-            self::$_responseMessage = "Привет! 👋 Что хочешь сделать?";
-            self::$_keyboard = [
-                "inline_keyboard" => [
-                    [
-                        ["text" => "📢 Опубликовать", "callback_data" => "/publish"],
-                        ["text" => "❌ Удалить", "callback_data" => "/delete"]
+        if ($action == "/publish") {
+            if (!self::isCanPostAds()) {
+                $lastPublishTime = strtotime(self::$_user['lastPost']);
+
+                self::$_responseMessage =
+                    "Публікація безкоштовного оголошення можлива після " .
+                    date('Y-m-d H:i:s', $lastPublishTime + 60 * 60 * 12);
+                self::$_keyboard = [
+                    "inline_keyboard" => [
+                        [
+                            ["text" => "💵 Оплатити публікацію 10 грн", "callback_data" => "/publish_pay"]
+                        ]
                     ]
-                ]
-            ];
-        } elseif ($action == "/publish") {
+                ];
+            }
             self::$_responseMessage = "Окей, пришли текст своего объявления ✍️";
         } elseif ($action == "/delete") {
             self::$_responseMessage = "Пришли ID объявления, которое нужно удалить ❌";
-        } else {
-            self::$_responseMessage = "Не понял 😅 Напиши /start";
         }
+    }
+
+    private static function isCanPostAds()
+    {
+        $lastPublishTime = strtotime(self::$_user['lastPost']);
+
+        return (time() - $lastPublishTime - 60 * 60 * 12) > 0;
     }
 
     private static function setNextStep($step)
     {
-        $request = (new UserRequest())->find('userId = :userId', ['userId' => self::$_userID]);
+        $request = (new UserRequest())->find('userId = :userId', ['userId' => self::$_user['id']]);
 
         if (empty($request)) {
-            (new UserRequest())->insert(['userId' => self::$_userID, 'step' => 1]);
+            (new UserRequest())->insert(['userId' => self::$_user['id'], 'step' => 1]);
         }
 
         (new UserRequest())->update('id = :id', [
