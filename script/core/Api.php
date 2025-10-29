@@ -65,6 +65,10 @@ class Api
                 return self::welcome($data);
             case 1:
                 return self::selectAddOrDrop($data);
+            case 2:
+                return self::setAdsUserName($data);
+            default:
+                return self::welcome($data);
         }
     }
 
@@ -150,6 +154,13 @@ class Api
         return self::runStep(self::WELCOME_STEP, $update);
     }
 
+    private static function setAdsUserName($data)
+    {
+        self::$_chatId = $data["message"]["chat"]["id"];
+        $name = $data["message"]["text"];
+
+        self::$_responseMessage = "Добре " . $name . " вкажіть контактний номер для зв'язку 📲";
+    }
     private static function isCanPostAds()
     {
         $lastPublishTime = strtotime(self::$_user['lastPost']);
