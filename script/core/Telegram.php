@@ -1,6 +1,8 @@
 <?php
 namespace Slando\core;
 
+use Curl\Curl;
+
 class Telegram
 {
     private static $_BOT_HASH = '7952044580:AAF36WhcLB9ux0a9MgDphxBbUJMJqG0UUbo';
@@ -49,7 +51,7 @@ class Telegram
             $sendData["reply_markup"] = json_encode($replyMarkup);
         }
 
-        $curl = new Curl\Curl();
+        $curl = new Curl();
         $curl->setHeader('Content-type', 'application/json');
         $curl->post('https://api.telegram.org/bot' . self::$_BOT_HASH . '/sendMessage',
             json_encode($sendData)
@@ -58,7 +60,7 @@ class Telegram
 
     protected function sendMediaGroup($text, $files)
     {
-        $curl = new Curl\Curl();
+        $curl = new Curl();
 
         // формируем массив файлов и media
         $media = [];
@@ -100,7 +102,7 @@ class Telegram
     protected function sendPhoto($botHash, $chatID, $text, $photo, $link)
     {
 
-        $curl = new Curl\Curl();
+        $curl = new Curl();
         $curl->setHeader('Content-type', 'application/json');
         $curl->post('https://api.telegram.org/bot' . self::$_BOT_HASH . '/sendPhoto',
             json_encode([
