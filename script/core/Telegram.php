@@ -2,10 +2,20 @@
 
 class Telegram
 {
-    const BOT_HASH = '7952044580:AAF36WhcLB9ux0a9MgDphxBbUJMJqG0UUbo';
+    private static $_BOT_HASH = '7952044580:AAF36WhcLB9ux0a9MgDphxBbUJMJqG0UUbo';
 
-    const CHAT_ID = '-4833170322';
+    private static $_CHAT_ID = '-4833170322';
 
+    public static function setCredentials($botHash)
+    {
+        self::$_BOT_HASH = $botHash;
+    }
+
+    public static function setChatID($chatID)
+    {
+        self::$_CHAT_ID = $chatID;
+    }
+    
     public static function sendRequest($data)
     {
         (new self())->sendMessage($data);
@@ -25,9 +35,9 @@ class Telegram
     {
         $curl = new Curl\Curl();
         $curl->setHeader('Content-type', 'application/json');
-        $curl->post('https://api.telegram.org/bot' . self::BOT_HASH . '/sendMessage',
+        $curl->post('https://api.telegram.org/bot' . self::$_BOT_HASH . '/sendMessage',
             json_encode([
-                'chat_id' => self::CHAT_ID,
+                'chat_id' => self::$_CHAT_ID,
                 'parse_mode' => 'HTML',
                 'text' => $text
             ])
@@ -41,7 +51,7 @@ class Telegram
         // формируем массив файлов и media
         $media = [];
         $postFields = [
-            'chat_id' => self::CHAT_ID
+            'chat_id' => self::$_CHAT_ID
         ];
 
         foreach ($files['files']['tmp_name'] as $i => $tmpFile) {
@@ -68,7 +78,7 @@ class Telegram
 
         // в multipart заголовок ставить не надо — curl сам поставит
         $result = $curl->post(
-            'https://api.telegram.org/bot' . self::BOT_HASH . '/sendMediaGroup',
+            'https://api.telegram.org/bot' . self::$_BOT_HASH . '/sendMediaGroup',
             $postFields
         );
 
@@ -80,9 +90,9 @@ class Telegram
 
         $curl = new Curl\Curl();
         $curl->setHeader('Content-type', 'application/json');
-        $curl->post('https://api.telegram.org/bot' . self::BOT_HASH . '/sendPhoto',
+        $curl->post('https://api.telegram.org/bot' . self::$_BOT_HASH . '/sendPhoto',
             json_encode([
-                'chat_id' => self::CHAT_ID,
+                'chat_id' => self::$_CHAT_ID,
                 'parse_mode' => 'HTML',
                 'photo' => $photo,
                 'text' => $text
