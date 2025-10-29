@@ -76,6 +76,20 @@ abstract class AbstractTable
         return $this->findByPk(self::$pdo->lastInsertId());
     }
 
+    public function update($search, $updateData)
+    {
+        $keys = array_keys($updateData);
+        $values = array_map(function ($key) {
+            return "{$key} = :{$key}";
+        }, $keys);
+        $prefix = implode(',', $values);
+
+        $stmt = self::$pdo->prepare("UPDATE `{$this->_table}` SET {$prefix} WHERE {$search}");
+        $stmt->execute($updateData);
+
+        return $stmt->rowCount();
+    }
+
     private function camelCaseToSnakeCase($camelCaseString)
     {
         $camelCaseString = explode('\\', $camelCaseString);

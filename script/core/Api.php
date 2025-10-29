@@ -7,6 +7,7 @@ use Slando\core\db\UserRequest;
 class Api
 {
     private static $_userID;
+    private static $step;
     private static $_chatId;
 
     private static $_responseMessage;
@@ -19,9 +20,9 @@ class Api
         Logger::log($content);
         $update = json_decode($content, true);
 
-        $step = self::checkProcessedRequest($update);
+        self::$step = self::checkProcessedRequest($update);
 
-        return self::runStep($step, $update);
+        return self::runStep(self::$step, $update);
     }
 
     private static function checkProcessedRequest($update)
@@ -56,12 +57,13 @@ class Api
         switch ($step) {
             case 0:
                 return self::welcome($data);
+            case 1:
+                return self::selectAddOrDrop($data);
         }
     }
 
     private static function welcome($update)
     {
-        if (isset($update["message"])) {
             self::$_chatId = $update["message"]["chat"]["id"];
 
             self::$_responseMessage = "Привіт! 👋 Обери дію";
@@ -74,16 +76,13 @@ class Api
                 ]
             ];
 
-            (new UserRequest())->insert(['userId' => self::$_userID, 'step' => 1]);
+            self::setNextStep(1);
 
             return [
                 'chatId' => self::$_chatId,
                 'responseMessage' => self::$_responseMessage,
                 'keyboard' => self::$_keyboard
             ];
-        }
-
-        return false;
     }
 
     private static function selectAddOrDrop($update)
@@ -123,5 +122,19 @@ class Api
         } else {
             self::$_responseMessage = "Не понял 😅 Напиши /start";
         }
+    }
+
+    private static function setNextStep($step)
+    {
+        $request = (new UserRequest())->find('userId = :userId', ['userId' => self::$_userID]);
+
+        if (empty($request)) {
+            (new UserRequest())->insert(['userId' => self::$_userID, 'step' => 1]);
+        }
+
+        (new UserRequest())->update('id = :id', [
+            'id' => $request['id'],
+            'step' => $step
+        ]);
     }
 }
