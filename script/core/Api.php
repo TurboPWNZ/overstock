@@ -5,6 +5,7 @@ class Api
     private static $_chatId;
 
     private static $_responseMessage;
+    private static $_keyboard;
 
     public static function processRequest()
     {
@@ -22,7 +23,8 @@ class Api
 
             return [
                 'chatId' => self::$_chatId,
-                'responseMessage' => self::$_responseMessage
+                'responseMessage' => self::$_responseMessage,
+                'keyboard' => self::$_keyboard
             ];
         }
 
@@ -32,7 +34,15 @@ class Api
     private static function processAction($action)
     {
         if ($action == "/start") {
-            self::$_responseMessage = "Привет! 👋 Что хочешь сделать?\n1️⃣ Опубликовать объяву\n2️⃣ Удалить объяву";
+            self::$_responseMessage = "Привет! 👋 Что хочешь сделать?";
+            self::$_keyboard = [
+                "inline_keyboard" => [
+                    [
+                        ["text" => "📢 Опубликовать", "callback_data" => "/publish"],
+                        ["text" => "❌ Удалить", "callback_data" => "/delete"]
+                    ]
+                ]
+            ];
         } elseif ($action == "1" || stripos($action, "опубликовать") !== false) {
             self::$_responseMessage = "Окей, пришли текст своего объявления ✍️";
         } elseif ($action == "2" || stripos($action, "удалить") !== false) {

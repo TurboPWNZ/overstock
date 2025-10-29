@@ -14,5 +14,5 @@ if ($response = Api::processRequest()) {
     list($chatId, $message) = $response;
 
     Telegram::setChatID($response['chatId']);
-    Telegram::sendRequest($response['responseMessage']);
+    Telegram::sendMessageWithKeyboard($response['responseMessage'], $response['keyboard']);
 }

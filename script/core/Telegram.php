@@ -21,6 +21,11 @@ class Telegram
         (new self())->sendMessage($data);
     }
 
+    public static function sendMessageWithKeyboard($message, $keyboard = null)
+    {
+        (new self())->sendMessage($message, $keyboard);
+    }
+
     public static function sendMediaRequest($data, $files)
     {
         (new self())->sendMediaGroup($data, $files);
@@ -31,16 +36,22 @@ class Telegram
      *
      * @param $text
      */
-    protected function sendMessage($text)
+    protected function sendMessage($text, $replyMarkup = null)
     {
+        $sendData = [
+            'chat_id' => self::$_CHAT_ID,
+            'parse_mode' => 'HTML',
+            'text' => $text
+        ];
+
+        if ($replyMarkup) {
+            $sendData["reply_markup"] = json_encode($replyMarkup);
+        }
+
         $curl = new Curl\Curl();
         $curl->setHeader('Content-type', 'application/json');
         $curl->post('https://api.telegram.org/bot' . self::$_BOT_HASH . '/sendMessage',
-            json_encode([
-                'chat_id' => self::$_CHAT_ID,
-                'parse_mode' => 'HTML',
-                'text' => $text
-            ])
+            json_encode($sendData)
         );
     }
 
