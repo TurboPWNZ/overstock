@@ -13,6 +13,7 @@ Telegram::setCredentials('8224108464:AAFgcKg-2cTWooWUF6fwsM7iGwXu4SAELFc');
 if ($response = Api::processRequest()) {
     list($chatId, $message) = $response;
 
+    Logger::log($message);
     Telegram::setChatID($chatId);
     Telegram::sendRequest($message);
 }
