@@ -100,7 +100,7 @@ class Api
             ];
         }
 
-        return false;
+        return self::runStep(self::$step - 1, $update);
     }
 
     private static function processAction($action)
