@@ -10,6 +10,8 @@ class Api
 
     const ADD_ADS_STEP = 1;
 
+    const ADS_NAME_STEP = 2;
+
     private static $_user;
     private static $step;
     private static $_chatId;
@@ -95,7 +97,48 @@ class Api
             self::$_chatId = $update["callback_query"]["message"]["chat"]["id"];
             $data = $update["callback_query"]["data"];
 
-            self::processAction($data);
+            if ($data == "/publish") {
+                if (!self::isCanPostAds()) {
+                    $lastPublishTime = strtotime(self::$_user['lastPost']);
+
+                    self::$_responseMessage =
+                        "Публікація безкоштовного оголошення можлива після " .
+                        date('d.m.Y H:i:s', $lastPublishTime + 60 * 60 * 12);
+                    self::$_keyboard = [
+                        "inline_keyboard" => [
+                            [
+                                ["text" => "💵 Оплатити публікацію 10 грн", "callback_data" => "/publish_pay"]
+                            ]
+                        ]
+                    ];
+                } else {
+//                self::$_responseMessage = "Окей, вкажи заголовок свого оголошення ✍️";
+                    self::$_responseMessage = "Вкажи як можна до тебе звертатись ✍️";
+
+                    if (
+                        !empty($update["callback_query"]['from']['first_name']) ||
+                        !empty($update["callback_query"]['from']['username'])
+                    ) {
+                        $keyboard = [[]];
+
+                        if (!empty($update["callback_query"]['from']['first_name']))
+                            array_push($keyboard[0], ["text" => $update["callback_query"]['from']['first_name']]);
+
+                        if (!empty($update["callback_query"]['from']['username']))
+                            array_push($keyboard[0], ["text" => $update["callback_query"]['from']['username']]);
+
+                        self::$_keyboard = [
+                            "keyboard" => $keyboard,
+                            "resize_keyboard" => true, // чтобы не занимала весь экран
+                            "one_time_keyboard" => false
+                        ];
+                    }
+
+                    self::setNextStep(self::ADS_NAME_STEP);
+                }
+            } elseif ($data == "/delete") {
+                self::$_responseMessage = "Пришли ID объявления, которое нужно удалить ❌";
+            }
 
             return [
                 'chatId' => self::$_chatId,
@@ -105,30 +148,6 @@ class Api
         }
 
         return self::runStep(self::WELCOME_STEP, $update);
-    }
-
-    private static function processAction($action)
-    {
-        if ($action == "/publish") {
-            if (!self::isCanPostAds()) {
-                $lastPublishTime = strtotime(self::$_user['lastPost']);
-
-                self::$_responseMessage =
-                    "Публікація безкоштовного оголошення можлива після " .
-                    date('Y-m-d H:i:s', $lastPublishTime + 60 * 60 * 12);
-                self::$_keyboard = [
-                    "inline_keyboard" => [
-                        [
-                            ["text" => "💵 Оплатити публікацію 10 грн", "callback_data" => "/publish_pay"]
-                        ]
-                    ]
-                ];
-            } else {
-                self::$_responseMessage = "Окей, пришли текст своего объявления ✍️";
-            }
-        } elseif ($action == "/delete") {
-            self::$_responseMessage = "Пришли ID объявления, которое нужно удалить ❌";
-        }
     }
 
     private static function isCanPostAds()
