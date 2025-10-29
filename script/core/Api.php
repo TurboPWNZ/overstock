@@ -18,8 +18,20 @@ class Api
             self::$_chatId = $update["message"]["chat"]["id"];
             $text = trim($update["message"]["text"]);
 
-
             self::processAction($text);
+
+            return [
+                'chatId' => self::$_chatId,
+                'responseMessage' => self::$_responseMessage,
+                'keyboard' => self::$_keyboard
+            ];
+        }
+
+        if (isset($update["callback_query"])) {
+            self::$_chatId = $update["callback_query"]["message"]["chat"]["id"];
+            $data = $update["callback_query"]["data"];
+
+            self::processAction($data);
 
             return [
                 'chatId' => self::$_chatId,
@@ -43,9 +55,9 @@ class Api
                     ]
                 ]
             ];
-        } elseif ($action == "1" || stripos($action, "опубликовать") !== false) {
+        } elseif ($action == "/publish") {
             self::$_responseMessage = "Окей, пришли текст своего объявления ✍️";
-        } elseif ($action == "2" || stripos($action, "удалить") !== false) {
+        } elseif ($action == "/delete") {
             self::$_responseMessage = "Пришли ID объявления, которое нужно удалить ❌";
         } else {
             self::$_responseMessage = "Не понял 😅 Напиши /start";
