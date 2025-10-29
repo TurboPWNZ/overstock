@@ -123,8 +123,9 @@ class Api
                         ]
                     ]
                 ];
+            } else {
+                self::$_responseMessage = "Окей, пришли текст своего объявления ✍️";
             }
-            self::$_responseMessage = "Окей, пришли текст своего объявления ✍️";
         } elseif ($action == "/delete") {
             self::$_responseMessage = "Пришли ID объявления, которое нужно удалить ❌";
         }
