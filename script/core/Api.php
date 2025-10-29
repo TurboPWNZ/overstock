@@ -10,6 +10,7 @@ class Api
     {
         // ====== ПОЛУЧАЕМ ВХОДЯЩИЕ ДАННЫЕ ======
         $content = file_get_contents("php://input");
+
         $update = json_decode($content, true);
 
         if (isset($update["message"])) {
