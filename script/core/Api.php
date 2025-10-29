@@ -10,10 +10,9 @@ class Api
 
     public static function processRequest()
     {
-        Logger::log(77777777888888899999999);
         // ====== ПОЛУЧАЕМ ВХОДЯЩИЕ ДАННЫЕ ======
         $content = file_get_contents("php://input");
-
+        Logger::log($content);
         $update = json_decode($content, true);
 
         if (isset($update["message"])) {
