@@ -1,18 +1,15 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/script/core/Telegram.php';
-require_once __DIR__ . '/script/core/Api.php';
-require_once __DIR__ . '/script/core/Logger.php';
 
 $content = file_get_contents("php://input");
 
-Logger::log($content);
+\Slando\core\Logger::log(0000000000000000);
 
-Telegram::setCredentials('8224108464:AAFgcKg-2cTWooWUF6fwsM7iGwXu4SAELFc');
+\Slando\core\Telegram::setCredentials('8224108464:AAFgcKg-2cTWooWUF6fwsM7iGwXu4SAELFc');
 
-if ($response = Api::processRequest()) {
+if ($response = \Slando\core\Api::processRequest()) {
     list($chatId, $message) = $response;
 
-    Telegram::setChatID($response['chatId']);
-    Telegram::sendMessageWithKeyboard($response['responseMessage'], $response['keyboard']);
+    \Slando\core\Telegram::setChatID($response['chatId']);
+    \Slando\core\Telegram::sendMessageWithKeyboard($response['responseMessage'], $response['keyboard']);
 }

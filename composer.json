@@ -1,5 +1,11 @@
 {
     "require": {
-        "curl/curl": "^2.5"
+        "curl/curl": "^2.5",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Slando\\": "script/"
+        }
     }
 }

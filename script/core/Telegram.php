@@ -1,4 +1,5 @@
 <?php
+namespace Slando\core;
 
 class Telegram
 {
