@@ -160,6 +160,11 @@ class Api
         $name = $data["message"]["text"];
 
         self::$_responseMessage = "Добре " . $name . " вкажіть контактний номер для зв'язку 📲";
+
+        return [
+            'chatId' => self::$_chatId,
+            'responseMessage' => self::$_responseMessage
+        ];
     }
     private static function isCanPostAds()
     {
