@@ -16,6 +16,9 @@ class Api
 
     const ADD_SUBJECT_STEP = 4;
     const ADD_DESCRIPTION_STEP = 5;
+    const ADD_PLACE_STEP = 6;
+    const ADD_PRICE_STEP = 7;
+    const ADD_PHOTO_STEP = 8;
 
     private static $_user;
     private static $_request;
@@ -77,6 +80,14 @@ class Api
                 return self::setAdsPhone($data);
             case 4:
                 return self::setAdsSubject($data);
+            case self::ADD_DESCRIPTION_STEP:
+                return self::setAdsDescription($data);
+            case self::ADD_PLACE_STEP:
+                return self::setAdsPlace($data);
+            case self::ADD_PRICE_STEP:
+                return self::setAdsPrice($data);
+            case self::ADD_PHOTO_STEP:
+                return self::setAdsPhoto($data);
             default:
                 return self::welcome($data);
         }
@@ -164,6 +175,96 @@ class Api
         return self::runStep(self::WELCOME_STEP, $update);
     }
 
+    private static function setAdsPhoto($data) {
+        self::$_chatId = $data["message"]["chat"]["id"];
+
+        if (empty($data["message"]['photo'])) {
+            self::$_responseMessage =
+                "‼️Будьласка, завантажте фотографію товару";
+
+            return [
+                'chatId' => self::$_chatId,
+                'responseMessage' => self::$_responseMessage
+            ];
+        }
+
+        $photo = end($data["message"]['photo']);
+
+        $file = Telegram::downloadFile($photo['file_id']);
+
+        $userDir = __DIR__ . '/../../uploads/' . self::$_user['telegramUserId'];
+
+        if (!is_dir($userDir)) {
+            mkdir($userDir, 754);
+        }
+
+        if (!is_writable($userDir)) {
+            chmod($userDir, 754);
+        }
+
+        $currentAds = self::getCurrentAds();
+
+        $adsDir = $userDir . '/' . $currentAds['id'];
+
+        if (!is_dir($adsDir)) {
+            mkdir($userDir, 754);
+        }
+
+        if (!is_writable($adsDir)) {
+            chmod($userDir, 754);
+        }
+
+    }
+    private static function setAdsPrice($data) {
+        self::$_chatId = $data["message"]["chat"]["id"];
+        $price = $data["message"]["text"];
+
+        self::updateAds(['price' => $price]);
+
+        self::$_responseMessage =
+            "✔️Дякуемо тепер, завантажте фотографію товару";
+
+        self::setNextStep(self::ADD_PHOTO_STEP);
+
+        return [
+            'chatId' => self::$_chatId,
+            'responseMessage' => self::$_responseMessage
+        ];
+    }
+
+    private static function setAdsPlace($data) {
+        self::$_chatId = $data["message"]["chat"]["id"];
+        $place = $data["message"]["text"];
+
+        self::updateAds(['place' => $place]);
+
+        self::$_responseMessage =
+            "✔️Дякуемо тепер, вкажіть ціну 💵 вашого товару Наприклад (1000 грн)";
+
+        self::setNextStep(self::ADD_PRICE_STEP);
+
+        return [
+            'chatId' => self::$_chatId,
+            'responseMessage' => self::$_responseMessage
+        ];
+    }
+    private static function setAdsDescription($data)
+    {
+        self::$_chatId = $data["message"]["chat"]["id"];
+        $description = $data["message"]["text"];
+
+        self::updateAds(['description' => $description]);
+
+        self::$_responseMessage =
+            "✔️Дякуемо тепер, вкажіть місце вашого розташування 📍 Наприклад (Київ, Деснянський р-н)";
+
+        self::setNextStep(self::ADD_PLACE_STEP);
+
+        return [
+            'chatId' => self::$_chatId,
+            'responseMessage' => self::$_responseMessage
+        ];
+    }
     private static function setAdsSubject($data)
     {
         self::$_chatId = $data["message"]["chat"]["id"];
@@ -171,7 +272,7 @@ class Api
 
         self::updateAds(['subject' => $subject]);
 
-        self::$_responseMessage = "Дякуемо тепер, вкажіть опис вашого оголошення 🔈";
+        self::$_responseMessage = "✔️Дякуемо тепер, вкажіть <b>опис</b> вашого оголошення ";
 
         self::setNextStep(self::ADD_DESCRIPTION_STEP);
 
@@ -188,7 +289,7 @@ class Api
 
         self::updateAds(['phone' => $phone]);
 
-        self::$_responseMessage = "Додано номер " . $phone . ", вкажіть заголовок оголошення 🔈";
+        self::$_responseMessage = "✔️Додано номер " . $phone . ", вкажіть <b>заголовок</b> оголошення";
 
         self::setNextStep(self::ADD_SUBJECT_STEP);
 
