@@ -14,6 +14,9 @@ class Api
     const ADS_NAME_STEP = 2;
     const ADD_PHONE_STEP = 3;
 
+    const ADD_SUBJECT_STEP = 4;
+    const ADD_DESCRIPTION_STEP = 5;
+
     private static $_user;
     private static $_request;
     private static $step;
@@ -72,6 +75,8 @@ class Api
                 return self::setAdsUserName($data);
             case 3:
                 return self::setAdsPhone($data);
+            case 4:
+                return self::setAdsSubject($data);
             default:
                 return self::welcome($data);
         }
@@ -139,7 +144,7 @@ class Api
                         self::$_keyboard = [
                             "keyboard" => $keyboard,
                             "resize_keyboard" => true, // чтобы не занимала весь экран
-                            "one_time_keyboard" => false
+                            "one_time_keyboard" => true
                         ];
                     }
 
@@ -159,15 +164,37 @@ class Api
         return self::runStep(self::WELCOME_STEP, $update);
     }
 
-    private static function setAdsPhone($data)
+    private static function setAdsSubject($data)
     {
         self::$_chatId = $data["message"]["chat"]["id"];
-        $name = $data["message"]["text"];
+        $subject = $data["message"]["text"];
+
+        self::updateAds(['subject' => $subject]);
+
+        self::$_responseMessage = "Дякуемо тепер, вкажіть опис вашого оголошення 🔈";
+
+        self::setNextStep(self::ADD_DESCRIPTION_STEP);
 
         return [
             'chatId' => self::$_chatId,
-            'responseMessage' => self::$_responseMessage,
-            'keyboard' => []
+            'responseMessage' => self::$_responseMessage
+        ];
+    }
+
+    private static function setAdsPhone($data)
+    {
+        self::$_chatId = $data["message"]["chat"]["id"];
+        $phone = $data["message"]["text"];
+
+        self::updateAds(['phone' => $phone]);
+
+        self::$_responseMessage = "Додано номер " . $phone . ", вкажіть заголовок оголошення 🔈";
+
+        self::setNextStep(self::ADD_SUBJECT_STEP);
+
+        return [
+            'chatId' => self::$_chatId,
+            'responseMessage' => self::$_responseMessage
         ];
     }
 
