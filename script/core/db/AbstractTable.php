@@ -45,12 +45,35 @@ abstract class AbstractTable
      */
     public function findByPk($id)
     {
-        $stmt = self::$pdo->prepare("SELECT * FROM `{$this->_table}` WHERE id = :id");
+        $stmt = self::$pdo->prepare("SELECT * FROM `{$this->_table}` WHERE {$this->id} = :id");
         $stmt->execute([
-            'id' => $id
+            $this->id => $id
         ]);
 
         return $stmt->fetch(); // одна строка
+    }
+
+    public function find($condition, $params)
+    {
+        $stmt = self::$pdo->prepare("SELECT * FROM `{$this->_table}` WHERE " . $condition);
+        $stmt->execute($params);
+
+        return $stmt->fetch(); // одна строка
+    }
+
+    public function insert($params)
+    {
+        $keys = array_keys($params);
+        $values = array_map(function ($key) {
+            return ':'.$key;
+        }, $keys);
+        $prefix = implode(',', $keys);
+        $sufix = implode(',', $values);
+
+        $stmt = self::$pdo->prepare("INSERT INTO `{$this->_table}` ({$prefix}) VALUES ({$sufix})");
+        $stmt->execute($params);
+
+        return $this->findByPk(self::$pdo->lastInsertId());
     }
 
     private function camelCaseToSnakeCase($camelCaseString)

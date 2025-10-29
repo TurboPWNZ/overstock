@@ -34,6 +34,35 @@ class Telegram
         (new self())->sendMediaGroup($data, $files);
     }
 
+    public static function downloadFile($fileID)
+    {
+        $getFile = json_decode((new self())->getFile($fileID));
+
+        if ($getFile->ok === true) {
+            return self::loadFile($getFile->result->file_path);
+        }
+
+        return false;
+    }
+
+    protected static function loadFile($filePath)
+    {
+        return file_get_contents('https://api.telegram.org/file/bot' . self::$_BOT_HASH . '/' . $filePath);
+    }
+
+    protected function getFile($fileID)
+    {
+        $curl = new Curl();
+        $curl->setHeader('Content-type', 'application/json');
+        $request = $curl->post('https://api.telegram.org/bot' . self::$_BOT_HASH . '/getFile',
+            json_encode([
+                'file_id' => $fileID
+            ])
+        );
+
+        return $request->getResponse();
+    }
+
     /**
      * Отправляет сообщение в чат.
      *
@@ -96,12 +125,11 @@ class Telegram
             $postFields
         );
 
-        var_dump($result); exit();
+//        var_dump($result); exit();
     }
 
     protected function sendPhoto($botHash, $chatID, $text, $photo, $link)
     {
-
         $curl = new Curl();
         $curl->setHeader('Content-type', 'application/json');
         $curl->post('https://api.telegram.org/bot' . self::$_BOT_HASH . '/sendPhoto',
