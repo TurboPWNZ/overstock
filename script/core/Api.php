@@ -54,8 +54,8 @@ class Api
 
         self::$_request = (new UserRequest())->find('userId = :userId', ['userId' => self::$_user['id']]);
 
-        if (!empty($_request['step'])) {
-            return $_request['step'];
+        if (!empty(self::$_request['step'])) {
+            return self::$_request['step'];
         }
 
         return self::WELCOME_STEP;
