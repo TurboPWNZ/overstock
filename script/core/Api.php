@@ -70,6 +70,8 @@ class Api
                 return self::selectAddOrDrop($data);
             case 2:
                 return self::setAdsUserName($data);
+            case 3:
+                return self::setAdsPhone($data);
             default:
                 return self::welcome($data);
         }
@@ -155,6 +157,18 @@ class Api
         }
 
         return self::runStep(self::WELCOME_STEP, $update);
+    }
+
+    private static function setAdsPhone($data)
+    {
+        self::$_chatId = $data["message"]["chat"]["id"];
+        $name = $data["message"]["text"];
+
+        return [
+            'chatId' => self::$_chatId,
+            'responseMessage' => self::$_responseMessage,
+            'keyboard' => []
+        ];
     }
 
     private static function setAdsUserName($data)
