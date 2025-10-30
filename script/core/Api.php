@@ -179,21 +179,16 @@ class Api
     {
         \Slando\core\Telegram::setChatID(self::$_chatId);
 
-        $keyboard = [
-            ["text" => "✔️Публікувати оголошення", "callback_data" => "/publish_ads"],
-            ["text" => "✍️Змінити оголошення", "callback_data" => "/reset_ads"],
-            ["text" => "❌Видалити оголошення", "callback_data" => "/remove_ads"]
-        ];
-
         $currentAds = self::getCurrentAds();
 
         $adsDir = __DIR__ . '/../../uploads/' . self::$_user['telegramUserId'] . '/' . $currentAds['id'];
 
-        $data['subject'] = '<i>' . $currentAds['subject'] . '</i>';
-        $data['price'] = '💵<b>' . $currentAds['price'] . '</b>' . "\n\n";
+        $data['subject'] = '<i>' . $currentAds['subject'] . '</i>' . " \n";
+        $data['price'] = 'Ціна: <b>' . $currentAds['price'] . ' грн</b>' . "\n\n";
         $data['description'] =  strip_tags($currentAds["description"]) . "\n\n";
-        $data['place'] =  '📍' . $currentAds['place'] . " \n";
-        $data['contact'] =  '📞' . $currentAds['phone'] . ' <b>' . $currentAds['name'] . '</b>' . " \n";
+        $data['place'] =  '📍' . $currentAds['place'] . " \n\n";
+        $data['user'] =  '👤' . ' <b>' . $currentAds['name'] . '</b>' . " \n";
+        $data['contact'] =  '📱' . $currentAds['phone'] . ' <b>' . $currentAds['name'] . '</b>' . " \n";
 /**
         $data['name'] = '🗣 <i>'. strip_tags($_REQUEST["name"]) . '</i>' . "\n\n";
 
@@ -212,7 +207,26 @@ class Api
 //            $data['image'] = "[ ](" . $ad['photos'][0] . ") \n";
 //            $data['link'] = '🔗 <a href="'.$ad['url'].'">Забрати</a>' . " \n";
 **/
-        Telegram::sendAdsPreview(implode($data), $adsDir, $keyboard);
+
+        Telegram::sendAdsPreview(implode($data), $adsDir);
+
+        self::$_responseMessage =
+            "🔎 Такий вигляд буде мати твое оголошення";
+        self::$_keyboard = [
+            "inline_keyboard" => [
+                [
+                    ["text" => "✔️Публікувати оголошення", "callback_data" => "/publish_ads"],
+                    ["text" => "✍️Змінити оголошення", "callback_data" => "/reset_ads"],
+                    ["text" => "❌Видалити оголошення", "callback_data" => "/remove_ads"]
+                ]
+            ]
+        ];
+
+        return [
+            'chatId' => self::$_chatId,
+            'responseMessage' => self::$_responseMessage,
+            'keyboard' => self::$_keyboard
+        ];
     }
 
     private static function setAdsPhoto($data) {
@@ -221,7 +235,7 @@ class Api
             $action = $data["callback_query"]["data"];
 
             if ($action == "/preview_ads") {
-                self::adsPreview();
+                return self::adsPreview();
             }
         }
 

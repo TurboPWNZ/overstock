@@ -29,9 +29,9 @@ class Telegram
         (new self())->sendMessage($message, $keyboard);
     }
 
-    public static function sendAdsPreview($data, $imagePath, $keyboard)
+    public static function sendAdsPreview($data, $imagePath)
     {
-        (new self())->sendMediaGroupFromDir($imagePath, $data, $keyboard);
+        (new self())->sendMediaGroupFromDir($imagePath, $data);
     }
 
     public static function sendMediaRequest($data, $files)
@@ -92,7 +92,7 @@ class Telegram
         );
     }
 
-    protected function sendMediaGroupFromDir($dirPath, $text = '', $buttons = [])
+    protected function sendMediaGroupFromDir($dirPath, $text = '')
     {
         $curl = new Curl();
 
@@ -135,15 +135,6 @@ class Telegram
         }
 
         $postFields['media'] = json_encode($media);
-
-        // Добавляем inline-клавиатуру, если есть кнопки
-        if (!empty($buttons)) {
-            // Ожидаем формат: [['text' => 'Кнопка 1', 'callback_data' => 'cmd1'], ...]
-            $keyboard = [
-                'inline_keyboard' => [ $buttons ]
-            ];
-            $postFields['reply_markup'] = json_encode($keyboard);
-        }
 
         // Отправляем запрос в Telegram API
         $result = $curl->post(
