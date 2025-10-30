@@ -219,11 +219,11 @@ class Api
         $adsDir = $userDir . '/' . $currentAds['id'];
 
         if (!is_dir($adsDir)) {
-            mkdir($userDir, 754);
+            mkdir($userDir, 777);
         }
 
         if (!is_writable($adsDir)) {
-            chmod($userDir, 754);
+            chmod($userDir, 777);
         }
 
         file_put_contents($adsDir . '/' . $fileName, $file);
