@@ -177,6 +177,8 @@ class Api
 
     private static function adsPreview()
     {
+        \Slando\core\Telegram::setChatID(self::$_chatId);
+
         $keyboard = [
             ["text" => "✔️Публікувати оголошення", "callback_data" => "/publish_ads"],
             ["text" => "✍️Змінити оголошення", "callback_data" => "/reset_ads"],
