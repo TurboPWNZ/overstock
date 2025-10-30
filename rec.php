@@ -35,7 +35,6 @@ if ($ret !== 0 || $text === '') {
 
 $question = $text;
 
-$apiKey = $apiKey = "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"; // 🔒 ключ в переменной окружения
 
 // Подготавливаем данные
 $url = "https://api.openai.com/v1/responses";
