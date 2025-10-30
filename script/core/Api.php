@@ -456,7 +456,7 @@ class Api
         //@todo Удвлить все файли с дириктории обяви
         $ads = self::getCurrentAds();
 
-        $adsDir = __DIR__ . '/../../uploads/' . self::$_user['telegramUserId'] . '/' . $currentAds['id'];
+        $adsDir = __DIR__ . '/../../uploads/' . self::$_user['telegramUserId'] . '/' . $ads['id'];
 
         self::deleteDirectory($adsDir);
 
