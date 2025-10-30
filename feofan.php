@@ -28,6 +28,11 @@ if (hasSergeyMention($question) && $sender != 'turboplay1989') {
     exit();
 }
 
+if (isUkrainianText($question) && $sender != 'turboplay1989') {
+    \Slando\core\Telegram::sendRequest('Говори па русски смерд 🖕🖕🖕');
+    exit();
+}
+
 $apiKey = "";
 
 // Подготавливаем данные
@@ -75,6 +80,7 @@ if (isset($decoded["output"][0]["content"][0]["text"])) {
 function hasSergeyMention($text) {
     // Список возможных форм имени
     $patterns = [
+        'сірьог',
         'сергей',
         'серёг',    // серёга, серёжка
         'серега',
@@ -98,4 +104,32 @@ function hasSergeyMention($text) {
     }
 
     return false;
+}
+
+function isUkrainianText($text) {
+    // Приводим к нижнему регистру
+    $text = mb_strtolower($text, 'UTF-8');
+
+    // Украинские специфические буквы (их нет в русском)
+    $ukrLetters = ['і', 'ї', 'є', 'ґ'];
+
+    // Если есть хотя бы одна из этих букв — точно укр
+    foreach ($ukrLetters as $letter) {
+        if (mb_strpos($text, $letter, 0, 'UTF-8') !== false) {
+            return true;
+        }
+    }
+
+    // Если букв нет — можно дополнительно проверить частоту "укр" слов
+    $ukrWords = ['та', 'що', 'це', 'якщо', 'буде', 'тут', 'він', 'вона', 'ми', 'ви', 'вони'];
+    $ukrCount = 0;
+
+    foreach ($ukrWords as $word) {
+        if (mb_strpos($text, $word, 0, 'UTF-8') !== false) {
+            $ukrCount++;
+        }
+    }
+
+    // Если найдено несколько типичных украинских слов — тоже укр
+    return $ukrCount >= 2;
 }
