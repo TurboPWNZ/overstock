@@ -237,6 +237,12 @@ class Api
                 ]
             ]
         ];
+
+        return [
+            'chatId' => self::$_chatId,
+            'responseMessage' => self::$_responseMessage,
+            'keyboard' => self::$_keyboard
+        ];
     }
 
     private static function setAdsPrice($data) {
