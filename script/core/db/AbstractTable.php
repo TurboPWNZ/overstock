@@ -90,6 +90,14 @@ abstract class AbstractTable
         return $stmt->rowCount();
     }
 
+    public function removeFromPk($id)
+    {
+        $stmt = self::$pdo->prepare("DELETE FROM `{$this->_table}` WHERE {$this->id} = :id");
+        $stmt->execute(['id' => $id]);
+
+        return (bool) $stmt->rowCount();
+    }
+
     private function camelCaseToSnakeCase($camelCaseString)
     {
         $camelCaseString = explode('\\', $camelCaseString);

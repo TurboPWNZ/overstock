@@ -215,9 +215,9 @@ class Api
         self::$_keyboard = [
             "inline_keyboard" => [
                 [
-                    ["text" => "✔️Публікувати оголошення", "callback_data" => "/publish_ads"],
-                    ["text" => "✍️Змінити оголошення", "callback_data" => "/reset_ads"],
-                    ["text" => "❌Видалити оголошення", "callback_data" => "/remove_ads"]
+                    ["text" => "✔️Публікувати", "callback_data" => "/publish_ads"],
+                    ["text" => "✍️Змінити", "callback_data" => "/reset_ads"],
+                    ["text" => "❌Видалити", "callback_data" => "/remove_ads"]
                 ]
             ]
         ];
@@ -234,8 +234,40 @@ class Api
             self::$_chatId = $data["callback_query"]["message"]["chat"]["id"];
             $action = $data["callback_query"]["data"];
 
+            if ($action == "/publish_ads") {
+                //return self::adsPreview();
+            }
+
             if ($action == "/preview_ads") {
                 return self::adsPreview();
+            }
+
+            if ($action == "/reset_ads") {
+                return self::runStep(self::ADD_ADS_STEP, $data);
+            }
+
+            if ($action == "/remove_ads") {
+                $remove = self::removeCurrentAds();
+
+                if ($remove) {
+                    self::setNextStep(self::ADD_ADS_STEP);
+
+                    self::$_responseMessage = "Оголошення видалено! 👋 Обери дію";
+                    self::$_keyboard = [
+                        "inline_keyboard" => [
+                            [
+                                ["text" => "📢 Опублікувати", "callback_data" => "/publish"],
+                                ["text" => "❌ Видалити", "callback_data" => "/delete"]
+                            ]
+                        ]
+                    ];
+
+                    return [
+                        'chatId' => self::$_chatId,
+                        'responseMessage' => self::$_responseMessage,
+                        'keyboard' => self::$_keyboard
+                    ];
+                }
             }
         }
 
@@ -417,6 +449,13 @@ class Api
         (new Ads())->update('id = :id', array_merge([
             'id' => $ads['id']
         ], $params));
+    }
+
+    private static function removeCurrentAds()
+    {
+        $ads = self::getCurrentAds();
+
+        return (new Ads())->removeFromPk($ads['id']);
     }
 
     private static function getCurrentAds()
