@@ -175,7 +175,54 @@ class Api
         return self::runStep(self::WELCOME_STEP, $update);
     }
 
+    private static function adsPreview()
+    {
+        $keyboard = [
+            ["text" => "✔️Публікувати оголошення", "callback_data" => "/publish_ads"],
+            ["text" => "✍️Змінити оголошення", "callback_data" => "/reset_ads"],
+            ["text" => "❌Видалити оголошення", "callback_data" => "/remove_ads"]
+        ];
+
+        $currentAds = self::getCurrentAds();
+
+        $adsDir = __DIR__ . '/../../uploads/' . self::$_user['telegramUserId'] . '/' . $currentAds['id'];
+
+        $data['subject'] = '<i>' . $currentAds['subject'] . '</i>';
+        $data['price'] = '💵<b>' . $currentAds['price'] . '</b>' . "\n\n";
+        $data['description'] =  strip_tags($currentAds["description"]) . "\n\n";
+        $data['place'] =  '📍' . $currentAds['place'] . " \n";
+        $data['contact'] =  '📞' . $currentAds['phone'] . ' <b>' . $currentAds['name'] . '</b>' . " \n";
+/**
+        $data['name'] = '🗣 <i>'. strip_tags($_REQUEST["name"]) . '</i>' . "\n\n";
+
+        if (!empty($_REQUEST["company"])) {
+            $data['company'] = ' 🏢 <b>' . strip_tags($_REQUEST["company"]) . '</b>' . "\n\n";
+        }
+
+        $data['phone'] =  "📞" . strip_tags($_REQUEST["phone"]) . "\n\n";
+        $data['description'] =  strip_tags($_REQUEST["description"]) . "\n\n";
+
+        $data['name'] = '🔈 <i>' . $ad['title'] . '</i>';
+        $data['price'] = ' 🆓 <b>' . $ad['price']['displayValue'] . '</b>' . "\n\n";
+        $data['description'] =  strip_tags($ad['description']) . "\n\n";
+
+        $data['place'] =  '📍' . $ad['location']['pathName'] . " \n";
+//            $data['image'] = "[ ](" . $ad['photos'][0] . ") \n";
+//            $data['link'] = '🔗 <a href="'.$ad['url'].'">Забрати</a>' . " \n";
+**/
+        Telegram::sendAdsPreview(implode($data), $adsDir, $keyboard);
+    }
+
     private static function setAdsPhoto($data) {
+        if (isset($data["callback_query"])) {
+            self::$_chatId = $data["callback_query"]["message"]["chat"]["id"];
+            $action = $data["callback_query"]["data"];
+
+            if ($action == "/preview_ads") {
+                self::adsPreview();
+            }
+        }
+
         self::$_chatId = $data["message"]["chat"]["id"];
 
         if (empty($data["message"]['photo'])) {
@@ -233,7 +280,7 @@ class Api
         self::$_keyboard = [
             "inline_keyboard" => [
                 [
-                    ["text" => "✔️Публікувати оголошення", "callback_data" => "/publish_ads"]
+                    ["text" => "✔️Публікувати оголошення", "callback_data" => "/preview_ads"]
                 ]
             ]
         ];
