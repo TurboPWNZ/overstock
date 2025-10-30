@@ -187,8 +187,8 @@ class Api
         $data['price'] = 'Ціна: <b>' . $currentAds['price'] . ' грн</b>' . "\n\n";
         $data['description'] =  strip_tags($currentAds["description"]) . "\n\n";
         $data['place'] =  '📍' . $currentAds['place'] . " \n\n";
-        $data['user'] =  '👤' . ' <b>' . $currentAds['name'] . '</b>' . " \n";
-        $data['contact'] =  '📱' . $currentAds['phone'] . ' <b>' . $currentAds['name'] . '</b>' . " \n";
+        $data['user'] =  '👤' . ' <b>' . $currentAds['name'] . '</b>' . " \n\n";
+        $data['contact'] =  '📱' . $currentAds['phone'] . " \n";
 /**
         $data['name'] = '🗣 <i>'. strip_tags($_REQUEST["name"]) . '</i>' . "\n\n";
 
