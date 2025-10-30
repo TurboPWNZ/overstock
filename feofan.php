@@ -17,4 +17,6 @@ if (stripos($question, '@feofan_slavian_bot') === false) {
     exit();
 }
 
+\Slando\core\Telegram::setChatID($update['message']['chat']['id']);
+
 \Slando\core\Telegram::sendRequest('На связи 💪💪💪');
