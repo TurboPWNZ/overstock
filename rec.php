@@ -35,6 +35,7 @@ if ($ret !== 0 || $text === '') {
 
 $question = $text;
 
+$apiKey = ""; //
 
 // Подготавливаем данные
 $url = "https://api.openai.com/v1/responses";

@@ -28,7 +28,7 @@ if (hasSergeyMention($question) && $sender != 'turboplay1989') {
     exit();
 }
 
-$apiKey = ""; // 🔒 ключ в переменной окружения
+$apiKey = "";
 
 // Подготавливаем данные
 $url = "https://api.openai.com/v1/responses";
