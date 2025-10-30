@@ -8,3 +8,13 @@ require_once __DIR__ . '/vendor/autoload.php';
 $content = file_get_contents("php://input");
 
 Logger::log($content);
+
+$update = json_decode($content, true);
+
+$question = $update['message']['text'];
+
+if (stripos($question, '@feofan_slavian_bot') === false) {
+    exit();
+}
+
+\Slando\core\Telegram::sendRequest('На связи 💪💪💪');
