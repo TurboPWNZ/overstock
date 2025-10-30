@@ -207,11 +207,11 @@ class Api
         $userDir = __DIR__ . '/../../uploads/' . self::$_user['telegramUserId'];
 
         if (!is_dir($userDir)) {
-            mkdir($userDir, 754);
+            mkdir($userDir, 777);
         }
 
         if (!is_writable($userDir)) {
-            chmod($userDir, 754);
+            chmod($userDir, 777);
         }
 
         $currentAds = self::getCurrentAds();
