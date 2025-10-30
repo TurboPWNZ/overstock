@@ -192,6 +192,18 @@ class Api
 
         $file = Telegram::downloadFile($photo['file_id']);
 
+        $fileName = self::createImageFileName($file);
+
+        if (empty($fileName)) {
+            self::$_responseMessage =
+                "‼️Будьласка, завантажте фотографію товару. Завантаженний файл не є картинкою";
+
+            return [
+                'chatId' => self::$_chatId,
+                'responseMessage' => self::$_responseMessage
+            ];
+        }
+
         $userDir = __DIR__ . '/../../uploads/' . self::$_user['telegramUserId'];
 
         if (!is_dir($userDir)) {
@@ -214,7 +226,19 @@ class Api
             chmod($userDir, 754);
         }
 
+        file_put_contents($adsDir . '/' . $fileName, $file);
+
+        self::$_responseMessage =
+            "✔️Фотографія завантажена. Відправите ще фотографію?";
+        self::$_keyboard = [
+            "inline_keyboard" => [
+                [
+                    ["text" => "✔️Публікувати оголошення", "callback_data" => "/publish_ads"]
+                ]
+            ]
+        ];
     }
+
     private static function setAdsPrice($data) {
         self::$_chatId = $data["message"]["chat"]["id"];
         $price = $data["message"]["text"];
@@ -342,6 +366,29 @@ class Api
         }
 
         return (new Ads())->findByPk(self::$_request['adsId']);
+    }
+
+    private static function createImageFileName($fileData)
+    {
+        // Определяем MIME-тип по контенту
+        $finfo = new \finfo(FILEINFO_MIME_TYPE);
+        $mime  = $finfo->buffer($fileData);
+
+        // Карта mime → расширение
+        $map = [
+            'image/jpeg' => 'jpg',
+            'image/png'  => 'png',
+            'image/gif'  => 'gif',
+            'image/webp' => 'webp',
+        ];
+
+        if (empty($map[$mime])) {
+            return false;
+        }
+
+        $ext = $map[$mime];
+
+        return date('YmdHis') . '.' . $ext;
     }
 
     private static function isCanPostAds()
