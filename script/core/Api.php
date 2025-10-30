@@ -453,7 +453,12 @@ class Api
 
     private static function removeCurrentAds()
     {
+        //@todo Удвлить все файли с дириктории обяви
         $ads = self::getCurrentAds();
+
+        $adsDir = __DIR__ . '/../../uploads/' . self::$_user['telegramUserId'] . '/' . $currentAds['id'];
+
+        self::deleteDirectory($adsDir);
 
         return (new Ads())->removeFromPk($ads['id']);
     }
@@ -474,6 +479,37 @@ class Api
         }
 
         return (new Ads())->findByPk(self::$_request['adsId']);
+    }
+
+    private static function deleteDirectory($dir) {
+        // Проверяем, существует ли директория
+        if (!is_dir($dir)) {
+            return false;
+        }
+
+        // Получаем все файлы и папки в директории
+        $items = scandir($dir);
+
+        foreach ($items as $item) {
+            // Пропускаем специальные директории "." и ".."
+            if ($item == '.' || $item == '..') {
+                continue;
+            }
+
+            // Формируем полный путь к элементу
+            $path = $dir . DIRECTORY_SEPARATOR . $item;
+
+            // Если элемент - директория, вызываем функцию рекурсивно
+            if (is_dir($path)) {
+                self::deleteDirectory($path);
+            } else {
+                // Если элемент - файл, удаляем его
+                unlink($path);
+            }
+        }
+
+        // Удаляем саму директорию
+        return rmdir($dir);
     }
 
     private static function createImageFileName($fileData)
