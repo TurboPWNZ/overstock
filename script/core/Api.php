@@ -775,10 +775,10 @@ class Api
             'adsId' => null
         ]);
 
-        (new Ads())->update('id = :id', [
-            'id' => $ads['id'],
-            'publishTime' => date('Y-m-d H:i:s', time())
-        ]);
+//        (new Ads())->update('id = :id', [
+//            'id' => $ads['id'],
+//            'publishTime' => date('Y-m-d H:i:s', time())
+//        ]);
 
         (new User())->update('id = :id', [
             'id' => $ads['userId'],

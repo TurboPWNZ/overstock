@@ -61,6 +61,14 @@ abstract class AbstractTable
         return $stmt->fetch(); // одна строка
     }
 
+    public function findAll($condition, $params)
+    {
+        $stmt = self::$pdo->prepare("SELECT * FROM `{$this->_table}` WHERE " . $condition);
+        $stmt->execute($params);
+
+        return $stmt->fetchAll();
+    }
+
     public function insert($params)
     {
         $keys = array_keys($params);
