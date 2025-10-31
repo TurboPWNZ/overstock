@@ -72,15 +72,15 @@ class Api
     private static function runStep($step, $data)
     {
         switch ($step) {
-            case 0:
+            case self::WELCOME_STEP:
                 return self::welcome($data);
             case self::ADD_ADS_STEP:
                 return self::selectAddOrDrop($data);
-            case 2:
+            case self::ADS_NAME_STEP:
                 return self::setAdsUserName($data);
-            case 3:
+            case self::ADD_PHONE_STEP:
                 return self::setAdsPhone($data);
-            case 4:
+            case self::ADD_SUBJECT_STEP:
                 return self::setAdsSubject($data);
             case self::ADD_DESCRIPTION_STEP:
                 return self::setAdsDescription($data);
@@ -136,7 +136,8 @@ class Api
                     self::$_keyboard = [
                         "inline_keyboard" => [
                             [
-                                ["text" => "💵 Оплатити публікацію 10 грн", "callback_data" => "/publish_pay"]
+                                ["text" => "💵 Оплатити публікацію 10 грн", "callback_data" => "/publish_pay"],
+                                ["text" => "❌ Видалити", "callback_data" => "/delete"]
                             ]
                         ]
                     ];
