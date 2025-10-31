@@ -13,7 +13,6 @@ class Publisher
         if (empty($ads))
             return false;
 
-        var_dump($ads); exit();
         foreach ($ads as $ad) {
             self::publishAd($ad);
         }
