@@ -71,7 +71,7 @@ class Api
                 }
 
                 Telegram::setChatID($chat);
-                Telegram::removeMessageById($messageId);
+                Logger::log(Telegram::removeMessageById($messageId));
 
                 return [
                     'chatId' => self::$_chatId,

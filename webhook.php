@@ -16,6 +16,7 @@ Telegram::setCredentials('8224108464:AAFgcKg-2cTWooWUF6fwsM7iGwXu4SAELFc');
 //
 //exit();
 if ($response = \Slando\core\Api::processRequest()) {
+
     Telegram::setChatID($response['chatId']);
     $result = Telegram::sendMessageWithKeyboard($response['responseMessage'], $response['keyboard']);
 
