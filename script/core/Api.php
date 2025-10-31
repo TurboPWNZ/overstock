@@ -37,14 +37,17 @@ class Api
         Logger::log($content);
         $update = json_decode($content, true);
 
-        self::checkModerateRequest($update);
+        $moderate = self::checkModerateRequest($update);
+
+        if (!empty($moderate))
+            return $moderate;
 
         self::$step = self::checkProcessedRequest($update);
 
         return self::runStep(self::$step, $update);
     }
 
-    private static function checkModerateRequest()
+    private static function checkModerateRequest($update)
     {
         $config = Configurator::load();
         if (!empty($update['callback_query']['from']['id']) &&
@@ -61,22 +64,50 @@ class Api
 
                 if ($action === 'approve') {
                     self::approveModeratedMessage($adsId);
-
-                    Telegram::setChatID($chat);
-                    Telegram::removeMessageById($messageId);
-
-                    return [
-                        'chatId' => self::$_chatId,
-                        'responseMessage' => self::$_responseMessage,
-                        'keyboard' => self::$_keyboard
-                    ];
                 }
 
                 if ($action === 'cancel') {
-
+                    self::cancelModeratedMessage($adsId);
                 }
+
+                Telegram::setChatID($chat);
+                Telegram::removeMessageById($messageId);
+
+                return [
+                    'chatId' => self::$_chatId,
+                    'responseMessage' => self::$_responseMessage,
+                    'keyboard' => self::$_keyboard
+                ];
             }
         }
+
+        return false;
+    }
+
+    private static function cancelModeratedMessage($adsId)
+    {
+        (new Ads())->update('id = :id', [
+            'id' => $adsId,
+            'publishTime' => null
+        ]);
+
+        $ads = (new Ads())->findByPk($adsId);
+
+        $user = (new User())->findByPk($ads['userId']);
+
+        self::$_chatId = $user['telegramUserId'];
+
+        self::$_responseMessage = "Нажаль, оголошення <b>{$ads['subject']}</b> не пройшло модерацію! \n
+Виправте його та повторіть публікацію ✍️";
+
+        self::$_keyboard = [
+            "inline_keyboard" => [
+                [
+                    ["text" => "📢 Опублікувати", "callback_data" => "/publish"],
+                    ["text" => "📋 Мої оголошення", "callback_data" => "/list"]
+                ]
+            ]
+        ];
     }
 
     private static function approveModeratedMessage($adsId)
@@ -89,8 +120,6 @@ class Api
         $ads = (new Ads())->findByPk($adsId);
 
         $user = (new User())->findByPk($ads['userId']);
-
-        Telegram::setChatID($user['telegramUserId']);
 
         self::$_chatId = $user['telegramUserId'];
 
