@@ -180,7 +180,22 @@ class Api
     }
 
     private static function setPublishType($data) {
+        if (isset($data["callback_query"])) {
+            self::$_chatId = $data["callback_query"]["message"]["chat"]["id"];
+            $action = $data["callback_query"]["data"];
 
+            if ($action == "/free_publish") {
+
+            }
+
+            if ($action == "/20_publish") {
+
+            }
+
+            if ($action == "/50_publish") {
+
+            }
+        }
     }
     private static function adsPreview()
     {

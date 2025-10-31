@@ -26,7 +26,7 @@ class Telegram
 
     public static function sendMessageWithKeyboard($message, $keyboard = null)
     {
-        (new self())->sendMessage($message, $keyboard);
+        return (new self())->sendMessage($message, $keyboard);
     }
 
     public static function sendAdsPreview($data, $imagePath)
@@ -87,7 +87,7 @@ class Telegram
 
         $curl = new Curl();
         $curl->setHeader('Content-type', 'application/json');
-        $curl->post('https://api.telegram.org/bot' . self::$_BOT_HASH . '/sendMessage',
+        return $curl->post('https://api.telegram.org/bot' . self::$_BOT_HASH . '/sendMessage',
             json_encode($sendData)
         );
     }
