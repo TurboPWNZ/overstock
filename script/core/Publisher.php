@@ -33,7 +33,6 @@ class Publisher
         $data['contact'] =  '📱<tg-spoiler>' . $ad['phone'] . "</tg-spoiler> \n";
 
         Telegram::setChatID($config['params']['publish_ads_chanel_id']);
-        $r = Telegram::sendAdsPreview(implode($data), $adsDir);
-        var_dump($r);
+        Telegram::sendAdsPreview(implode($data), $adsDir);
     }
 }
