@@ -39,6 +39,11 @@ class Telegram
         (new self())->sendMediaGroup($data, $files);
     }
 
+    public static function removeMessageById($messageId)
+    {
+        return (new self())->removeMessage($messageId);
+    }
+
     public static function downloadFile($fileID)
     {
         $getFile = json_decode((new self())->getFile($fileID));
@@ -66,6 +71,21 @@ class Telegram
         );
 
         return $request->getResponse();
+    }
+
+    protected function removeMessage($messageId)
+    {
+        $sendData = [
+            'chat_id'    => self::$_CHAT_ID,
+            'message_id' => $messageId
+        ];
+
+        $curl = new Curl();
+        $curl->setHeader('Content-type', 'application/json');
+        return $curl->post(
+            'https://api.telegram.org/bot' . self::$_BOT_HASH . '/deleteMessage',
+            json_encode($sendData)
+        );
     }
 
     /**

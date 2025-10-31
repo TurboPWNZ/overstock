@@ -37,9 +37,73 @@ class Api
         Logger::log($content);
         $update = json_decode($content, true);
 
+        self::checkModerateRequest($update);
+
         self::$step = self::checkProcessedRequest($update);
 
         return self::runStep(self::$step, $update);
+    }
+
+    private static function checkModerateRequest()
+    {
+        $config = Configurator::load();
+        if (!empty($update['callback_query']['from']['id']) &&
+            !empty($update['callback_query']['message']['sender_chat']['id'])) {
+            $moderator = $update['callback_query']['from']['id'];
+            $chat = $update['callback_query']['message']['sender_chat']['id'];
+            $messageId = $update['callback_query']['message']['id'];
+            $data = $update["callback_query"]["data"];
+
+            if (in_array($moderator, $config['params']['moderators']['list']) &&
+                $chat == $config['params']['moderator_chanel_id']) {
+
+                list($p, $action, $adsId) = explode('_', $data);
+
+                if ($action === 'approve') {
+                    self::approveModeratedMessage($adsId);
+
+                    Telegram::setChatID($chat);
+                    Telegram::removeMessageById($messageId);
+
+                    return [
+                        'chatId' => self::$_chatId,
+                        'responseMessage' => self::$_responseMessage,
+                        'keyboard' => self::$_keyboard
+                    ];
+                }
+
+                if ($action === 'cancel') {
+
+                }
+            }
+        }
+    }
+
+    private static function approveModeratedMessage($adsId)
+    {
+        (new Ads())->update('id = :id', [
+            'id' => $adsId,
+            'isReady' => 1
+        ]);
+
+        $ads = (new Ads())->findByPk($adsId);
+
+        $user = (new User())->findByPk($ads['userId']);
+
+        Telegram::setChatID($user['telegramUserId']);
+
+        self::$_chatId = $user['telegramUserId'];
+
+        self::$_responseMessage = "Дякуемо, оголошення <b>{$ads['subject']}</b> успішно пройшло модерацію та буде опубліковано в каналі! \n
+Дякуємо за співпрацю 🤝";
+        self::$_keyboard = [
+            "inline_keyboard" => [
+                [
+                    ["text" => "📢 Опублікувати", "callback_data" => "/publish"],
+                    ["text" => "📋 Мої оголошення", "callback_data" => "/list"]
+                ]
+            ]
+        ];
     }
 
     private static function checkProcessedRequest($update)
