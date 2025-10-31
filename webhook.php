@@ -10,5 +10,5 @@ if ($response = \Slando\core\Api::processRequest()) {
 
     \Slando\core\Telegram::setChatID($response['chatId']);
     $result = \Slando\core\Telegram::sendMessageWithKeyboard($response['responseMessage'], $response['keyboard']);
-    var_dump($result);
+    var_dump($result->response);
 }
