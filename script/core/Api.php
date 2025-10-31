@@ -188,6 +188,8 @@ class Api
             if ($action == "/free_publish") {
                 self::publishAds();
 
+                self::pushAdsToModerate();
+
                 self::setNextStep(self::ADD_ADS_STEP);
 
                 self::$_responseMessage = "Дякуемо, оголошення буде опубліковано післе проходження модерації! 👋 Обери дію";
@@ -195,7 +197,7 @@ class Api
                     "inline_keyboard" => [
                         [
                             ["text" => "📢 Опублікувати", "callback_data" => "/publish"],
-                            ["text" => "❌ Видалити", "callback_data" => "/delete"]
+                            ["text" => "📋 Мої оголошення", "callback_data" => "/list"]
                         ]
                     ]
                 ];
@@ -216,6 +218,42 @@ class Api
             }
         }
     }
+
+    private static function pushAdsToModerate()
+    {
+        $config = Configurator::load();
+
+        \Slando\core\Telegram::setChatID($config['params']['moderator_chanel_id']);
+
+        $currentAds = self::getCurrentAds();
+
+        $adsDir = __DIR__ . '/../../uploads/' . self::$_user['telegramUserId'] . '/' . $currentAds['id'];
+
+        $data['subject'] = '<i>' . $currentAds['subject'] . '</i>' . " \n";
+        $data['price'] = 'Ціна: <b>' . $currentAds['price'] . ' грн</b>' . "\n\n";
+        $data['description'] =  strip_tags($currentAds["description"]) . "\n\n";
+        $data['place'] =  '📍' . $currentAds['place'] . " \n\n";
+        $data['user'] =  '👤' . ' <b>' . $currentAds['name'] . '</b>' . " \n\n";
+        $data['contact'] =  '📱<tg-spoiler>' . $currentAds['phone'] . "</tg-spoiler> \n";
+
+        Telegram::sendAdsPreview(implode($data), $adsDir);
+
+        self::$_responseMessage =
+            "🔎 Такий вигляд буде мати це оголошення";
+        self::$_keyboard = [
+            "inline_keyboard" => [
+                [
+                    ["text" => "✔️Підтвердити", "callback_data" => "/moderate_approve_" . $currentAds['id']],
+                    ["text" => "❌Відмовити", "callback_data" => "/moderate_cancel_" . $currentAds['id']]
+                ]
+            ]
+        ];
+
+        Telegram::sendMessageWithKeyboard(self::$_responseMessage, self::$_keyboard);
+
+        \Slando\core\Telegram::setChatID(self::$_chatId);
+    }
+
     private static function adsPreview()
     {
         \Slando\core\Telegram::setChatID(self::$_chatId);
