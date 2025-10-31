@@ -24,6 +24,7 @@ class Api
     private static $_request;
     private static $step;
     private static $_chatId;
+    private static $_currentAds;
 
     private static $_responseMessage;
     private static $_keyboard;
@@ -188,10 +189,10 @@ class Api
         $data['description'] =  strip_tags($currentAds["description"]) . "\n\n";
         $data['place'] =  '📍' . $currentAds['place'] . " \n\n";
         $data['user'] =  '👤' . ' <b>' . $currentAds['name'] . '</b>' . " \n\n";
-        $data['contact'] =  '📱' . $currentAds['phone'] . " \n";
+        $data['contact'] =  '📱<tg-spoiler>' . $currentAds['phone'] . "</tg-spoiler> \n";
 /**
         $data['name'] = '🗣 <i>'. strip_tags($_REQUEST["name"]) . '</i>' . "\n\n";
-
+<tg-spoiler>смерд</tg-spoiler>
         if (!empty($_REQUEST["company"])) {
             $data['company'] = ' 🏢 <b>' . strip_tags($_REQUEST["company"]) . '</b>' . "\n\n";
         }
@@ -243,6 +244,8 @@ class Api
             }
 
             if ($action == "/reset_ads") {
+                self::removeAdsImages();
+
                 return self::runStep(self::ADD_ADS_STEP, $data);
             }
 
@@ -451,6 +454,15 @@ class Api
         ], $params));
     }
 
+    private static function removeAdsImages()
+    {
+        $ads = self::getCurrentAds();
+
+        $adsDir = __DIR__ . '/../../uploads/' . self::$_user['telegramUserId'] . '/' . $ads['id'];
+
+        self::deleteDirectory($adsDir);
+    }
+
     private static function removeCurrentAds()
     {
         $ads = self::getCurrentAds();
@@ -477,7 +489,10 @@ class Api
             return $ads;
         }
 
-        return (new Ads())->findByPk(self::$_request['adsId']);
+        if (empty(self::$_currentAds))
+            self::$_currentAds = (new Ads())->findByPk(self::$_request['adsId']);
+
+        return self::$_currentAds;
     }
 
     private static function deleteDirectory($dir) {
