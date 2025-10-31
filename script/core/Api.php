@@ -248,7 +248,7 @@ class Api
                 ]
             ]
         ];
-        Logger::log('Send moderate');
+        Logger::log('Send moderate' . $config['params']['moderator_chanel_id']);
         $result = Telegram::sendMessageWithKeyboard(self::$_responseMessage, self::$_keyboard);
         Logger::log($result->response);
 
