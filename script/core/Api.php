@@ -54,7 +54,7 @@ class Api
             !empty($update['callback_query']['message']['sender_chat']['id'])) {
             $moderator = $update['callback_query']['from']['id'];
             $chat = $update['callback_query']['message']['sender_chat']['id'];
-            $messageId = $update['callback_query']['message']['id'];
+            $messageId = $update['callback_query']['message']['message_id'];
             $data = $update["callback_query"]["data"];
 
             if (in_array($moderator, $config['params']['moderators']['list']) &&
