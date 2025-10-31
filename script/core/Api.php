@@ -19,6 +19,7 @@ class Api
     const ADD_PLACE_STEP = 6;
     const ADD_PRICE_STEP = 7;
     const ADD_PHOTO_STEP = 8;
+    const SET_PUBLISH_TYPE_STEP = 9;
 
     private static $_user;
     private static $_request;
@@ -89,6 +90,8 @@ class Api
                 return self::setAdsPrice($data);
             case self::ADD_PHOTO_STEP:
                 return self::setAdsPhoto($data);
+            case self::SET_PUBLISH_TYPE_STEP:
+                return self::setPublishType($data);
             default:
                 return self::welcome($data);
         }
@@ -176,6 +179,9 @@ class Api
         return self::runStep(self::WELCOME_STEP, $update);
     }
 
+    private static function setPublishType($data) {
+
+    }
     private static function adsPreview()
     {
         \Slando\core\Telegram::setChatID(self::$_chatId);
@@ -236,6 +242,31 @@ class Api
             $action = $data["callback_query"]["data"];
 
             if ($action == "/publish_ads") {
+                self::setNextStep(self::SET_PUBLISH_TYPE_STEP);
+
+                self::$_responseMessage = "Обери бажаний варіант публікації: <br />
+                    <ul>
+                        <li>🆓Безкоштовно - 1 публікація оголошення на день</li>
+                        <li>💵20 грн - 3 публікації оголошення на день</li>
+                        <li>💵50 грн - 10 публікацій оголошення на день</li>
+                    </ul>
+                 ";
+
+                self::$_keyboard = [
+                    "inline_keyboard" => [
+                        [
+                            ["text" => "💵 50 грн", "callback_data" => "/50_publish"],
+                            ["text" => "💵20 грн", "callback_data" => "/20_publish"],
+                            ["text" => "🆓Безкоштовно", "callback_data" => "/free_publish"]
+                        ]
+                    ]
+                ];
+
+                return [
+                    'chatId' => self::$_chatId,
+                    'responseMessage' => self::$_responseMessage,
+                    'keyboard' => self::$_keyboard
+                ];
                 //return self::adsPreview();
             }
 
