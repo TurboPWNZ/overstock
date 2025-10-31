@@ -7,11 +7,13 @@ class Publisher
 {
     public static function run()
     {
-        $ads = (new Ads())->findAll('publishCount > 0 AND isReady = 1 AND publishTime < NOW() - INTERVAL 1 HOUR', []);
+        $ads = (new Ads())->findAll(
+            'publishCount > 0 AND isReady = 1 AND (publishTime <= NOW() - INTERVAL 1 HOUR OR publishTime IS NULL)', []);
 
         if (empty($ads))
             return false;
 
+        var_dump($ads); exit();
         foreach ($ads as $ad) {
             self::publishAd($ad);
         }
