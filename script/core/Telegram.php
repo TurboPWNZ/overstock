@@ -80,6 +80,8 @@ class Telegram
             'message_id' => $messageId
         ];
 
+        Logger::log(var_export($sendData, true));
+
         $curl = new Curl();
         $curl->setHeader('Content-type', 'application/json');
         return $curl->post(
