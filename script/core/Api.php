@@ -106,7 +106,7 @@ class Api
                 "inline_keyboard" => [
                     [
                         ["text" => "📢 Опублікувати", "callback_data" => "/publish"],
-                        ["text" => "❌ Видалити", "callback_data" => "/delete"]
+                        ["text" => "📋 Мої оголошення", "callback_data" => "/list"]
                     ]
                 ]
             ];
@@ -137,7 +137,7 @@ class Api
                         "inline_keyboard" => [
                             [
                                 ["text" => "💵 Оплатити публікацію 10 грн", "callback_data" => "/publish_pay"],
-                                ["text" => "❌ Видалити", "callback_data" => "/delete"]
+                                ["text" => "📋 Мої оголошення", "callback_data" => "/list"]
                             ]
                         ]
                     ];
