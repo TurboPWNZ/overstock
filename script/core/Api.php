@@ -185,7 +185,25 @@ class Api
             $action = $data["callback_query"]["data"];
 
             if ($action == "/free_publish") {
+                self::publishAds();
 
+                self::setNextStep(self::ADD_ADS_STEP);
+
+                self::$_responseMessage = "Дякуемо, оголошення буде опубліковано післе проходження модерації! 👋 Обери дію";
+                self::$_keyboard = [
+                    "inline_keyboard" => [
+                        [
+                            ["text" => "📢 Опублікувати", "callback_data" => "/publish"],
+                            ["text" => "❌ Видалити", "callback_data" => "/delete"]
+                        ]
+                    ]
+                ];
+
+                return [
+                    'chatId' => self::$_chatId,
+                    'responseMessage' => self::$_responseMessage,
+                    'keyboard' => self::$_keyboard
+                ];
             }
 
             if ($action == "/20_publish") {
@@ -610,6 +628,21 @@ class Api
         (new UserRequest())->update('id = :id', [
             'id' => $request['id'],
             'step' => $step
+        ]);
+    }
+
+    private static function publishAds()
+    {
+        $ads = self::getCurrentAds();
+
+        (new UserRequest())->update('id = :id', [
+            'id' => self::$_request['id'],
+            'adsId' => null
+        ]);
+
+        (new Ads())->update('id = :id', [
+            'id' => $ads['id'],
+            'publishTime' => date('Y-m-d H:i:s', time())
         ]);
     }
 }
