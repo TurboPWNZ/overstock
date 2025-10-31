@@ -72,7 +72,7 @@ class Api
         switch ($step) {
             case 0:
                 return self::welcome($data);
-            case 1:
+            case self::ADD_ADS_STEP:
                 return self::selectAddOrDrop($data);
             case 2:
                 return self::setAdsUserName($data);
@@ -122,7 +122,7 @@ class Api
             self::$_chatId = $update["callback_query"]["message"]["chat"]["id"];
             $data = $update["callback_query"]["data"];
 
-            if ($data == "/publish") {
+            if (in_array($data, ["/publish", "/reset_ads"])) {
                 if (!self::isCanPostAds()) {
                     $lastPublishTime = strtotime(self::$_user['lastPost']);
 
@@ -453,7 +453,6 @@ class Api
 
     private static function removeCurrentAds()
     {
-        //@todo Удвлить все файли с дириктории обяви
         $ads = self::getCurrentAds();
 
         $adsDir = __DIR__ . '/../../uploads/' . self::$_user['telegramUserId'] . '/' . $ads['id'];
