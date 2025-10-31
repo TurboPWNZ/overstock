@@ -644,5 +644,10 @@ class Api
             'id' => $ads['id'],
             'publishTime' => date('Y-m-d H:i:s', time())
         ]);
+
+        (new User())->update('id = :id', [
+            'id' => $ads['userId'],
+            'lastPost' => date('Y-m-d H:i:s', time())
+        ]);
     }
 }
