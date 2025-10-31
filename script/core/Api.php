@@ -223,7 +223,7 @@ class Api
     {
         $config = Configurator::load();
 
-        \Slando\core\Telegram::setChatID($config['params']['moderator_chanel_id']);
+        Telegram::setChatID($config['params']['moderator_chanel_id']);
 
         $currentAds = self::getCurrentAds();
 
@@ -248,10 +248,11 @@ class Api
                 ]
             ]
         ];
+        Logger::log('Send moderate');
+        $result = Telegram::sendMessageWithKeyboard(self::$_responseMessage, self::$_keyboard);
+        Logger::log($result->response);
 
-        Telegram::sendMessageWithKeyboard(self::$_responseMessage, self::$_keyboard);
-
-        \Slando\core\Telegram::setChatID(self::$_chatId);
+        Telegram::setChatID(self::$_chatId);
     }
 
     private static function adsPreview()
