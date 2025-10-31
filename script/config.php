@@ -8,7 +8,7 @@ return [
         'password' => '5!XA%uee69',
     ],
     'params' => [
-        'moderator_chanel_id' => '2254357315',
-        'publish_ads_chanel_id' => '2237089560'
+        'moderator_chanel_id' => '-1002254357315',
+        'publish_ads_chanel_id' => '-1002237089560'
     ]
 ];
