@@ -7,7 +7,7 @@ class Publisher
 {
     public static function run()
     {
-        $ads = (new Ads())->findAll('publishCount > 0 AND isReady = 1', []);
+        $ads = (new Ads())->findAll('publishCount > 0 AND isReady = 1 AND publishTime < NOW() - INTERVAL 1 HOUR', []);
 
         if (empty($ads))
             return false;
@@ -34,5 +34,11 @@ class Publisher
 
         Telegram::setChatID($config['params']['publish_ads_chanel_id']);
         Telegram::sendAdsPreview(implode($data), $adsDir);
+
+        (new Ads())->update('id = :id', [
+            'id' => $ad['id'],
+            'publishTime' => date('Y-m-d H:i:s', time()),
+            'publishCount' => $ad['publishCount'] - 1
+        ]);
     }
 }
