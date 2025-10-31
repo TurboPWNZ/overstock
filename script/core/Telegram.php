@@ -31,7 +31,7 @@ class Telegram
 
     public static function sendAdsPreview($data, $imagePath)
     {
-        (new self())->sendMediaGroupFromDir($imagePath, $data);
+        return (new self())->sendMediaGroupFromDir($imagePath, $data);
     }
 
     public static function sendMediaRequest($data, $files)
