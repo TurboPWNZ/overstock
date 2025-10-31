@@ -223,7 +223,7 @@ class Api
     {
         $config = Configurator::load();
 
-        Telegram::setChatID($config['params']['moderator_chanel_id']);
+        Telegram::setChatID('-1002254357315');
 
         $currentAds = self::getCurrentAds();
 
@@ -248,7 +248,7 @@ class Api
                 ]
             ]
         ];
-        Logger::log('Send moderate' . $config['params']['moderator_chanel_id']);
+        Logger::log('Send moderate' . '-1002254357315');
         $result = Telegram::sendMessageWithKeyboard(self::$_responseMessage, self::$_keyboard);
         Logger::log($result->response);
 
