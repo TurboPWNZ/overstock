@@ -34,6 +34,11 @@ class Api
     {
         // ====== ПОЛУЧАЕМ ВХОДЯЩИЕ ДАННЫЕ ======
         $content = file_get_contents("php://input");
+
+        $config = Configurator::load();
+
+        Logger::log(var_export($config, true));
+        Logger::log($config['params']['moderator_chanel_id']);
         Logger::log($content);
         $update = json_decode($content, true);
 
@@ -248,7 +253,7 @@ class Api
                 ]
             ]
         ];
-        Logger::log('Send moderate' . '-1002254357315');
+        Logger::log('=>>>>Send moderate' . '-1002254357315');
         $result = Telegram::sendMessageWithKeyboard(self::$_responseMessage, self::$_keyboard);
         Logger::log($result->response);
 
