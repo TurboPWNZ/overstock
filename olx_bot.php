@@ -5,6 +5,6 @@ use Slando\core\Logger;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$content = file_get_contents("php://input");
+
 
 Logger::log($content);
