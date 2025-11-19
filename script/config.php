@@ -8,13 +8,11 @@ return [
         'password' => '5!XA%uee69',
     ],
     'params' => [
+        'secrets' => require_once __DIR__ . '/secrets.php',
         'moderators' => [
             'list' => [579806028]
         ],
         'moderator_chanel_id' => '-1002254357315',
         'publish_ads_chanel_id' => '-1002237089560',
-        'olx' => [
-            'bot' => '8580489386:AAFdkKmUXGpMKeQNQj5Du6T5Ss_vb6VtHRM'
-        ]
     ]
 ];
