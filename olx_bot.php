@@ -5,6 +5,5 @@ use Slando\core\Logger;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-
-
-Logger::log($content);
+\Slando\core\olx\Handler::request();
+//Logger::log($content);
