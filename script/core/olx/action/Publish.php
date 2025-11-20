@@ -1,11 +1,11 @@
 <?php
 namespace Slando\core\olx\action;
 
-use Slando\core\Bank;
 use Slando\core\Configurator;
+use Slando\core\olx\db\Subscription;
 use Slando\core\Telegram;
 
-class Start extends AAction
+class Publish extends AAction
 {
     public function run($requestData)
     {
@@ -17,27 +17,25 @@ class Start extends AAction
 
         $account = $this->loadAccount($requestData);
 
-        $paymentLink = Bank::getPaymentLink(7777777, 55);
+        $this->createNewSubscription($account);
 
         $keyboard =  [
-            ["text" => "ℹ️ Допомога", "callback_data" => "/help"],
+            ["text" => "🔄️ Повернутись", "callback_data" => "/start"],
 //            ["text" => "💵 Оплата", "url" => $paymentLink],
 //                        ["text" => "📋 Мої оголошення", "callback_data" => "/list"]
         ];
 
-        if ($this->isAccountHasSubscription($account)) {
-            $keyboard[] = ["text" => "📋 Мої оголошення", "callback_data" => "/list"];
-        } else {
-            $keyboard[] = ["text" => "📢 Додати підписку", "callback_data" => "/publish"];
-        }
-
-        $response['responseMessage'] = "Привіт! 👋 Обери дію";
-        $response['keyboard'] = [
-        "inline_keyboard" => [
-                    $keyboard
-                ]
-            ];
+        $response['responseMessage'] = "Вкажіть назву нової підписки";
+        $response['keyboard'] = [];
 
         $result = Telegram::sendMessageWithKeyboard($response['responseMessage'], $response['keyboard']);
+    }
+
+    protected function createNewSubscription($account)
+    {
+        $subscription = (new Subscription())->insert([
+            'userId' => $account['id'],
+            'isEditInProgress' => 1,
+        ]);
     }
 }

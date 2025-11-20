@@ -33,6 +33,9 @@ class Handler
             case '/help':
                 (new Help())->run(self::$_requestData);
                 break;
+            case '/publish':
+                (new Help())->run(self::$_requestData);
+                break;
             default: (new Start())->run(self::$_requestData);
         }
     }
