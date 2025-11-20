@@ -3,6 +3,7 @@ namespace Slando\core\olx;
 
 use Slando\core\Configurator;
 use Slando\core\olx\action\Help;
+use Slando\core\olx\action\Publish;
 use Slando\core\olx\action\Start;
 use Slando\core\Telegram;
 
@@ -34,7 +35,7 @@ class Handler
                 (new Help())->run(self::$_requestData);
                 break;
             case '/publish':
-                (new Help())->run(self::$_requestData);
+                (new Publish())->run(self::$_requestData);
                 break;
             default: (new Start())->run(self::$_requestData);
         }
