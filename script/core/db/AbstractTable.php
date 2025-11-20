@@ -106,7 +106,7 @@ abstract class AbstractTable
         return (bool) $stmt->rowCount();
     }
 
-    private function camelCaseToSnakeCase($camelCaseString)
+    protected function camelCaseToSnakeCase($camelCaseString)
     {
         $camelCaseString = explode('\\', $camelCaseString);
         $camelCaseString = end($camelCaseString);
