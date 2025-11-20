@@ -17,6 +17,12 @@ class Publish extends AAction
 
         $account = $this->loadAccount($requestData);
 
+        $subscription = $this->loadSubscriptionInEdit($account);
+
+        if (!empty($subscription)) {
+            return false;
+        }
+
         $this->createNewSubscription($account);
 
         $keyboard =  [

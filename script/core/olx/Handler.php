@@ -2,6 +2,7 @@
 namespace Slando\core\olx;
 
 use Slando\core\Configurator;
+use Slando\core\olx\action\Common;
 use Slando\core\olx\action\Help;
 use Slando\core\olx\action\Publish;
 use Slando\core\olx\action\Start;
@@ -31,13 +32,16 @@ class Handler
     private static function runAction()
     {
         switch (self::$_requestData['requestSubject']) {
+            case '/start':
+                (new Start())->run(self::$_requestData);
+                break;
             case '/help':
                 (new Help())->run(self::$_requestData);
                 break;
             case '/publish':
                 (new Publish())->run(self::$_requestData);
                 break;
-            default: (new Start())->run(self::$_requestData);
+            default: (new Common())->run(self::$_requestData);
         }
     }
 

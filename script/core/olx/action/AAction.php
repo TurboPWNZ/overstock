@@ -25,4 +25,11 @@ abstract class AAction
     {
         return (new Subscription())->find('userId = :userId', ['userId' => $account['id']]);
     }
+
+    protected function loadSubscriptionInEdit($account)
+    {
+        return (new Subscription())->find('userId = :userId AND isEditInProgress = 1', [
+            'userId' => $account['id']
+        ]);
+    }
 }
