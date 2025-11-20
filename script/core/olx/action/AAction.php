@@ -8,7 +8,8 @@ abstract class AAction
 {
     protected function loadAccount($requestData)
     {
-        $account = (new Account())->findByPk($requestData['senderId']);
+        $account = (new Account())
+            ->find('telegramUserId = :telegramUserId', ['telegramUserId' => $requestData['senderId']]);
 
         if (empty($account)) {
             $account = (new Account())->insert([
