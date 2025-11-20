@@ -2,6 +2,7 @@
 namespace Slando\core\olx;
 
 use Slando\core\Configurator;
+use Slando\core\olx\action\Help;
 use Slando\core\olx\action\Start;
 use Slando\core\Telegram;
 
@@ -28,7 +29,12 @@ class Handler
 
     private static function runAction()
     {
-        (new Start())->run(self::$_requestData);
+        switch (self::$_requestData['requestSubject']) {
+            case '/help':
+                (new Help())->run(self::$_requestData);
+                break;
+            default: (new Start())->run(self::$_requestData);
+        }
     }
 
     private static function extractRequestData($update)
