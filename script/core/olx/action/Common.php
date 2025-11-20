@@ -43,7 +43,7 @@ class Common extends AAction
             $keyboard = [];
         } else {
             $responseMessage = 'Підписка сформована';
-            $keyboard = ["text" => "🔀 Запустити", "callback_data" => "/pay"];
+            $keyboard = [["text" => "🔀 Запустити", "callback_data" => "/pay"]];
         }
 
 
