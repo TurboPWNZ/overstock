@@ -41,7 +41,7 @@ class Common extends AAction
         if (empty($subscription['name'])) {
             $responseMessage = 'Вкажіть ссилку на пошук оголошень';
             $keyboard = [];
-        } elseif (empty($subscription['url'])) {
+        } else {
             $responseMessage = 'Підписка сформована';
             $keyboard = ["text" => "🔀 Запустити", "callback_data" => "/pay"];
         }
