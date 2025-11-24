@@ -66,6 +66,10 @@ class Common extends AAction
         if (empty($subscription['name'])) {
             $updateData['name'] = $requestData['requestSubject'];
         } elseif (empty($subscription['url'])) {
+            if (strpos($subscription['url'], 'www.olx.ua/uk') === false) {
+                $subscription['url'] = str_replace('olx.ua', 'olx.ua/uk', $subscription['url']);
+            }
+
             $updateData['url'] = $requestData['requestSubject'];
         }
 
