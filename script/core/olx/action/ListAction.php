@@ -28,13 +28,15 @@ class ListAction extends AAction
                 ':subUrl' => $subscription['url'],
                 ':subValidUntil' => $subscription['validUntil'],
             ]);
+            $list.= Translation::text("/edit_sub_:subId - изменить /remove_sub_:subId - удалить",
+                [':subId' => $subscription['id']]);
         }
 
         $response['responseMessage'] = Translation::text("Список ваших подписок: \n\n");
         $response['responseMessage'].= $list;
-        $response['responseMessage'].= Translation::text("\n Для того что бы изменить подписку пришлите комманду 
-        /edit_sub id  где id номер вашей подписки.\n Для того что бы удалить подписку пришлите комманду 
-        /remove_sub id  где id номер вашей подписки.");
+//        $response['responseMessage'].= Translation::text("\n Для того что бы изменить подписку пришлите комманду
+//        /edit_sub id  где id номер вашей подписки.\n Для того что бы удалить подписку пришлите комманду
+//        /remove_sub id  где id номер вашей подписки.");
 
         $response['keyboard'] = [
             "inline_keyboard" => [
