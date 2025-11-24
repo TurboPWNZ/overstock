@@ -44,7 +44,8 @@ class Sender
             'adId' => $adID,
         ]);
 
-        (new Ads())->insert(['subscriptionId' => $subscriptionID, 'adId' => $adID]);
+        if (!$ad)
+            (new Ads())->insert(['subscriptionId' => $subscriptionID, 'adId' => $adID]);
 
         return !$ad;
     }
