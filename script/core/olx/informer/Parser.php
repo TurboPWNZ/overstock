@@ -10,7 +10,7 @@ class Parser
         $curl = new Curl();
         $request = $curl->get($url);
 
-        return $request->getResponse();
+        return $this->extractAdsData($request->getResponse());
     }
 
     private function extractAdsData($content)
