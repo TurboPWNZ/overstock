@@ -41,6 +41,9 @@ class Handler
             case '/publish':
                 (new Publish())->run(self::$_requestData);
                 break;
+            case '/pay':
+                (new Pay())->run(self::$_requestData);
+                break;
             default: (new Common())->run(self::$_requestData);
         }
     }
