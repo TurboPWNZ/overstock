@@ -56,6 +56,7 @@ class Sender
         }
 
         (new Subscription())->update('id = :id', [
+            'id' => $subscription['id'],
             'nextTime' => date('Y-m-d H:i:s', time() + 60 * 15)
         ]);
     }
