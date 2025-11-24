@@ -53,9 +53,11 @@ class Sender
 
             echo "->";
             sleep(rand(1, 3));
-
-            break;
         }
+
+        (new Subscription())->update('id = :id', [
+            'nextTime' => date('Y-m-d H:i:s', time() + 60 * 15)
+        ]);
     }
 
     private static function isNewRecord($adID, $subscriptionID)
