@@ -22,7 +22,7 @@ class ListAction extends AAction
 
         $list = '';
         foreach ($subscriptions as $subscription) {
-            $list.= Translation::text(" - #:subId <b>:subName</b> - :subUrl Активна до :subValidUntil \n", [
+            $list.= Translation::text(" - #:subId <b>:subName</b> Активна до :subValidUntil \n", [
                 ':subId' => $subscription['id'],
                 ':subName' => $subscription['name'],
                 ':subUrl' => $subscription['url'],
@@ -33,8 +33,7 @@ class ListAction extends AAction
         $response['responseMessage'] = Translation::text("Список ваших подписок: \n\n");
         $response['responseMessage'].= $list;
         $response['responseMessage'].= Translation::text("\n Для того что бы изменить подписку пришлите комманду 
-        /edit_sub id  где id номер вашей подписки.\n
-        Для того что бы удалить подписку пришлите комманду 
+        /edit_sub id  где id номер вашей подписки.\n Для того что бы удалить подписку пришлите комманду 
         /remove_sub id  где id номер вашей подписки.");
 
         $response['keyboard'] = [
