@@ -7,6 +7,7 @@ use Slando\core\olx\action\Publish;
 use Slando\core\olx\action\Start;
 use Slando\core\olx\action\Pay;
 use Slando\core\olx\action\Trial;
+use Slando\core\olx\informer\Sender;
 
 class Handler
 {
@@ -27,6 +28,14 @@ class Handler
         self::extractRequestData($update);
 
         self::runAction();
+    }
+
+    /**
+     * @return void
+     */
+    public static function scheduler()
+    {
+        Sender::process();
     }
 
     private static function runAction()

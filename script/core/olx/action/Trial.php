@@ -38,7 +38,8 @@ class Trial extends AAction
 
         $this->activateTrial($subscription);
 
-        $response['responseMessage'] = Translation::text('Спасибо подписка <b>:subName</b> продлена на 24 часа!');
+        $response['responseMessage'] = Translation::text('Спасибо подписка <b>:subName</b> продлена на 24 часа!',
+            [':subName' => $subscription['name']]);
         $response['keyboard'] = [
             "inline_keyboard" => [
                 [
