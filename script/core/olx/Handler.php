@@ -1,12 +1,11 @@
 <?php
 namespace Slando\core\olx;
 
-use Slando\core\Configurator;
 use Slando\core\olx\action\Common;
 use Slando\core\olx\action\Help;
 use Slando\core\olx\action\Publish;
 use Slando\core\olx\action\Start;
-use Slando\core\Telegram;
+use Slando\core\olx\action\Pay;
 
 class Handler
 {
