@@ -6,6 +6,7 @@ use Slando\core\olx\action\Help;
 use Slando\core\olx\action\Publish;
 use Slando\core\olx\action\Start;
 use Slando\core\olx\action\Pay;
+use Slando\core\olx\action\Trial;
 
 class Handler
 {
@@ -42,6 +43,9 @@ class Handler
                 break;
             case '/pay':
                 (new Pay())->run(self::$_requestData);
+                break;
+            case '/trial':
+                (new Trial())->run(self::$_requestData);
                 break;
             default: (new Common())->run(self::$_requestData);
         }
