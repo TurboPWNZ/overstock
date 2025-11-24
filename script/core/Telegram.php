@@ -206,17 +206,29 @@ class Telegram
 //        var_dump($result); exit();
     }
 
-    protected function sendPhoto($botHash, $chatID, $text, $photo, $link)
+    public static function sendPhotoAds($text, $photo, $link)
     {
+        $sendData = [
+            'chat_id' => self::$_CHAT_ID,
+            'parse_mode' => 'HTML',
+            'photo' => $photo,
+            'caption' => $text,
+            'reply_markup' => json_encode(array(
+                'inline_keyboard' => array(
+                    array(
+                        array(
+                            'text' => '🤝 Перейти 🤝',
+                            'url' => $link
+                        )
+                    )
+                ),
+            ))
+        ];
+
         $curl = new Curl();
         $curl->setHeader('Content-type', 'application/json');
         $curl->post('https://api.telegram.org/bot' . self::$_BOT_HASH . '/sendPhoto',
-            json_encode([
-                'chat_id' => self::$_CHAT_ID,
-                'parse_mode' => 'HTML',
-                'photo' => $photo,
-                'text' => $text
-            ])
+            json_encode($sendData)
         );
     }
 }

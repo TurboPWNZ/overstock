@@ -1,13 +1,20 @@
 <?php
 namespace Slando\core\olx\informer;
 
+use Slando\core\Configurator;
+use Slando\core\olx\db\Account;
 use Slando\core\olx\db\Ads;
 use Slando\core\olx\db\Subscription;
+use Slando\core\Telegram;
 
 class Sender
 {
     public static function process()
     {
+        $config = Configurator::load();
+
+        Telegram::setCredentials($config['params']['secrets']['olx']['bot']);
+
         $subscriptions = self::loadSubscriptions();
 
         foreach ($subscriptions as $subscription) {
@@ -17,6 +24,10 @@ class Sender
 
     protected static function processSubscription($subscription)
     {
+        $account = self::getAccount($subscription['userId']);
+
+        Telegram::setChatID($account['telegramUserId']);
+
         $adsList = (new Parser())->loadRecordsList($subscription['url']);
 
         foreach ($adsList as $ad) {
@@ -32,9 +43,18 @@ class Sender
 
             $isNew = self::isNewRecord($ad['id'], $subscription['id']);
 
-            var_dump($isNew);
+            if (!$isNew)
+                continue;
+
+            Telegram::sendPhotoAds(implode(' ', $data),
+                $ad['photos'][0],
+                $ad['url']);
+
+            echo "->";
+            sleep(rand(1, 3));
+
+            break;
         }
-        var_dump($adsList);
     }
 
     private static function isNewRecord($adID, $subscriptionID)
@@ -53,5 +73,11 @@ class Sender
     protected static function loadSubscriptions()
     {
         return (new Subscription())->findAll('validUntil > NOW() AND nextTime < NOW()', []);
+    }
+
+    protected static function getAccount($id)
+    {
+        return (new Account())
+            ->find('id = :id', ['id' => $id]);
     }
 }
