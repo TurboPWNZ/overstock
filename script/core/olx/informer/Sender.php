@@ -31,8 +31,9 @@ class Sender
         $adsList = (new Parser())->loadRecordsList($subscription['url']);
 
         foreach ($adsList as $ad) {
-//            if ($ad['isPromoted'] === true)
-//                continue;
+            if ($ad['isPromoted'] === true)
+                continue;
+
             $data = [];
 
             $data['name'] = '🔈 <i>' . $ad['title'] . '</i>';
