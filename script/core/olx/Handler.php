@@ -3,6 +3,7 @@ namespace Slando\core\olx;
 
 use Slando\core\olx\action\Common;
 use Slando\core\olx\action\Help;
+use Slando\core\olx\action\ListAction;
 use Slando\core\olx\action\Publish;
 use Slando\core\olx\action\Start;
 use Slando\core\olx\action\Pay;
@@ -55,6 +56,9 @@ class Handler
                 break;
             case '/trial':
                 (new Trial())->run(self::$_requestData);
+                break;
+            case '/list':
+                (new ListAction())->run(self::$_requestData);
                 break;
             default: (new Common())->run(self::$_requestData);
         }
