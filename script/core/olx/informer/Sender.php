@@ -7,7 +7,18 @@ class Sender
 {
     public static function process()
     {
-        var_dump(self::loadSubscriptions());
+        $subscriptions = self::loadSubscriptions();
+
+        foreach ($subscriptions as $subscription) {
+            self::processSubscription($subscription);
+        }
+    }
+
+    protected static function processSubscription($subscription)
+    {
+        $adsList = (new Parser())->loadRecordsList($subscription['url']);
+
+        var_dump($adsList);
     }
 
     protected static function loadSubscriptions()

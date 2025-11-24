@@ -5,9 +5,7 @@ use Curl\Curl;
 
 class Parser
 {
-
-
-    protected function loadRecordsList($url)
+    public function loadRecordsList($url)
     {
         $curl = new Curl();
         $request = $curl->get($url);
