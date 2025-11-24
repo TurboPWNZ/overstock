@@ -42,6 +42,7 @@ class ListAction extends AAction
             "inline_keyboard" => [
                 [
                     ["text" => Translation::text("🔄️ Вернуться"), "callback_data" => "/start"],
+                    ["text" => Translation::text("📢 Добавить подписку"), "callback_data" => "/publish"],
                 ]
             ]
         ];

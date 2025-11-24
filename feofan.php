@@ -3,7 +3,8 @@ use Slando\core\Logger;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-\Slando\core\Telegram::setCredentials('8253837427:AAHYJR5-cU0zC7FWscCpjCo5piqsnEVTAZ8');
+$config = \Slando\core\Configurator::load();
+\Slando\core\Telegram::setCredentials($config['params']['secrets']['feofan']['bot']);
 
 $content = file_get_contents("php://input");
 
@@ -23,17 +24,20 @@ $question = trim(str_replace('@feofan_slavian_bot', '', $question));
 
 $sender = $update['message']['from']['username'];
 
+// Иди нахуй смерд, я не намерен обсуждать с тобой создателя 🖕🖕🖕
 if (hasSergeyMention($question) && $sender != 'turboplay1989') {
-    \Slando\core\Telegram::sendRequest('Иди нахуй смерд, я не намерен обсуждать с тобой создателя 🖕🖕🖕');
+    \Slando\core\Telegram::sendRequest('Я заметил что вы упоменули имя того кого мне не разрешено обсуждать! Извините задайте другой вопро пожалуйста.');
     exit();
 }
 
+/**
+//<tg-spoiler>смерд</tg-spoiler> 🖕🖕🖕
 if (isUkrainianText($question) && $sender != 'turboplay1989') {
-    \Slando\core\Telegram::sendRequest('Говори па русски смерд 🖕🖕🖕');
-    exit();
+\Slando\core\Telegram::sendRequest('Прошу прощения мисье не могли бы вы повторить вопрос на русском языке!🐷🐷🐷');
+exit();
 }
-
-$apiKey = "";
+ */
+$apiKey = $config['params']['secrets']['gpt']['api_key'];
 
 // Подготавливаем данные
 $url = "https://api.openai.com/v1/responses";
