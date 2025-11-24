@@ -36,16 +36,16 @@ class Pay extends AAction
         }
 
         $keyboard = [
-            ["text" => Translation::text("🔄️ Вернуться"), "callback_data" => "/start"],
-            ["text" => "💵20 грн", "url" => $this->createTransactionLink($account, $subscription, 20)],
-            ["text" => "💵50 грн", "url" => $this->createTransactionLink($account, $subscription, 50)],
-            ["text" => "💵100 грн", "url" => $this->createTransactionLink($account, $subscription, 100)],
-            ["text" => "💵200 грн", "url" => $this->createTransactionLink($account, $subscription, 200)],
+            ["text" => Translation::text("🔄️"), "callback_data" => "/start"],
+            ["text" => "20 грн", "url" => $this->createTransactionLink($account, $subscription, 20)],
+            ["text" => "50 грн", "url" => $this->createTransactionLink($account, $subscription, 50)],
+            ["text" => "100 грн", "url" => $this->createTransactionLink($account, $subscription, 100)],
+            ["text" => "200 грн", "url" => $this->createTransactionLink($account, $subscription, 200)],
 //                        ["text" => "📋 Мої оголошення", "callback_data" => "/list"]
         ];
 
         if ($account['trial'] == 1) {
-            $keyboard[] = ["text" => Translation::text("🆓бесплатно"),
+            $keyboard[] = ["text" => Translation::text("🆓"),
                 "callback_data" => "/trial"];
         }
 
