@@ -21,10 +21,10 @@ class ConfirmRemove extends AAction
         // Извлекаем ID подписки из команды /confirm_remove_123
         $subId = $this->extractSubId($requestData['requestSubject']);
 
-        if (!$subId) {
+//        if (!$subId) {
             $this->sendError("Невірний формат команди");
             return false;
-        }
+//        }
 
         // Проверяем, принадлежит ли подписка пользователю
         $subscription = $this->getSubscription($subId, $account['id']);
