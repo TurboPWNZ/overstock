@@ -8,6 +8,10 @@ use Slando\core\olx\action\Publish;
 use Slando\core\olx\action\Start;
 use Slando\core\olx\action\Pay;
 use Slando\core\olx\action\Trial;
+use Slando\core\olx\action\EditSub;
+use Slando\core\olx\action\RemoveSub;
+use Slando\core\olx\action\ConfirmRemove;
+use Slando\core\olx\action\CancelEdit;
 use Slando\core\olx\informer\Sender;
 
 class Handler
@@ -41,7 +45,31 @@ class Handler
 
     private static function runAction()
     {
-        switch (self::$_requestData['requestSubject']) {
+        $requestSubject = self::$_requestData['requestSubject'];
+        
+        // Проверяем команды с параметрами через regex
+        if (preg_match('/^\/edit_sub_\d+$/', $requestSubject)) {
+            (new EditSub())->run(self::$_requestData);
+            return;
+        }
+        
+        if (preg_match('/^\/remove_sub_\d+$/', $requestSubject)) {
+            (new RemoveSub())->run(self::$_requestData);
+            return;
+        }
+        
+        if (preg_match('/^\/confirm_remove_\d+$/', $requestSubject)) {
+            (new ConfirmRemove())->run(self::$_requestData);
+            return;
+        }
+        
+        if (preg_match('/^\/cancel_edit_\d+$/', $requestSubject) || $requestSubject === '/cancel') {
+            (new CancelEdit())->run(self::$_requestData);
+            return;
+        }
+        
+        // Стандартные команды
+        switch ($requestSubject) {
             case '/start':
                 (new Start())->run(self::$_requestData);
                 break;

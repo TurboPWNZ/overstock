@@ -71,6 +71,8 @@ class Common extends AAction
             }
 
             $updateData['url'] = $requestData['requestSubject'];
+            // Сбрасываем флаг редактирования после завершения
+            $updateData['isEditInProgress'] = 0;
         }
 
         (new Subscription())->update('id = :id', $updateData);

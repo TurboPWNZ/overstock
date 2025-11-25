@@ -28,7 +28,7 @@ class ListAction extends AAction
                 ':subUrl' => $subscription['url'],
                 ':subValidUntil' => $subscription['validUntil'],
             ]);
-            $list.= Translation::text("/edit_sub_:subId - изменить /remove_sub_:subId - удалить",
+            $list.= Translation::text("/edit_sub_:subId - изменить /remove_sub_:subId - удалить \n",
                 [':subId' => $subscription['id']]);
         }
 
