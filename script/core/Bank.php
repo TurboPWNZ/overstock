@@ -2,6 +2,7 @@
 namespace Slando\core;
 
 use Slando\core\libs\Base64Url;
+use Slando\core\payment\privat\Transaction;
 
 class Bank
 {
@@ -21,6 +22,11 @@ UAH{:depositAmount}
 {:description}
 
 ';
+
+    public static function scheduler()
+    {
+        Transaction::process();
+    }
 
     public static function getPaymentLink($transactionID, $amount)
     {
